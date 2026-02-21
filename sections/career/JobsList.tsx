@@ -1,0 +1,85 @@
+// import Section from "@/components/ui/Section"
+// import InternshipCard from "../internship/InternshipCard"
+
+// type Props = {
+//   active: "freshers" | "experienced"
+// }
+
+// const roles = [
+//   { title: "Python Developer", icon: "/images/internship/internship1.png" },
+//   { title: "Data Scientist", icon: "/images/internship/internship3.png" },
+//   { title: "PHP Developer", icon: "/images/internship/internship4.png" },
+//   { title: "JAVA Developer", icon: "/images/internship/internship5.png" },
+//   { title: "React Js Developer", icon: "/images/internship/internship6.png" },
+//   { title: "Android Developer", icon: "/images/internship/internship7.png" },
+//   { title: "Software Testing", icon: "/images/internship/internship8.png" },
+//   { title: "Flutter Developer", icon: "/images/internship/internship9.png" },
+//   { title: "AWS Developer", icon: "/images/internship/internship10.png" },
+//   { title: "Data Analyst", icon: "/images/internship/internship11.png" },
+//   { title: "MERNSTACK Developer", icon: "/images/internship/internship12.png" },
+//   { title: "UI UX Developer", icon: "/images/internship/internship13.png" },
+// ]
+
+// export default function JobsList({ active }: Props) {
+//   return (
+//     <Section>
+//       <div className="space-y-5">
+//         {roles.map((role) => (
+//           <InternshipCard
+//             key={role.title}
+//             title={`Urgently Hiring for the Position of ${role.title}`}
+//             icon={role.icon}
+//             duration={active === "freshers" ? "0 - 1 Year" : "2 - 4 Years"}
+//             mode="Depends Upon Interview"
+//             location="Ahmedabad, Pune, Mumbai"
+//           />
+//         ))}
+//       </div>
+//     </Section>
+//   )
+// }
+
+
+
+import Section from "@/components/ui/Section"
+import InternshipCard from "../internship/InternshipCard"
+
+type Props = {
+  active: "freshers" | "experienced"
+}
+
+const roles = [
+  { title: "Python Developer", icon: "/images/internship/internship1.png" },
+  { title: "Data Scientist", icon: "/images/internship/internship3.png" },
+  { title: "PHP Developer", icon: "/images/internship/internship4.png" },
+  { title: "JAVA Developer", icon: "/images/internship/internship5.png" },
+  { title: "React Js Developer", icon: "/images/internship/internship6.png" },
+  { title: "Android Developer", icon: "/images/internship/internship7.png" },
+  { title: "Software Testing", icon: "/images/internship/internship8.png" },
+  { title: "Flutter Developer", icon: "/images/internship/internship9.png" },
+  { title: "AWS Developer", icon: "/images/internship/internship10.png" },
+  { title: "Data Analyst", icon: "/images/internship/internship11.png" },
+  { title: "MERNSTACK Developer", icon: "/images/internship/internship12.png" },
+  { title: "UI UX Developer", icon: "/images/internship/internship13.png" },
+]
+
+export default function JobsList({ active }: Props) {
+  return (
+    <Section>
+      <div className="space-y-5">
+        {roles.map((role) => (
+          <InternshipCard
+            key={role.title}
+            title={`Urgently Hiring for the Position of ${role.title}`}
+            icon={role.icon}
+            duration={active === "freshers" ? "0 - 1 Year" : "2 - 4 Years"}
+            mode="Depends Upon Interview"
+            location="Ahmedabad, Pune, Mumbai"
+            modeIcon="💰"   // ✅ CAREER ONLY
+            variant="job"
+          />
+        ))}
+      </div>
+    </Section>
+  )
+}

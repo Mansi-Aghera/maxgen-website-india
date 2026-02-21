@@ -1,0 +1,169 @@
+
+
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap");
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  /* ===== Brand Colors ===== */
+  --color-primary: #263b6a;
+  --color-accent: #ef3b3a;
+
+  /* ===== Text ===== */
+  --color-text: #1a1a1a;
+  --color-text-muted: #555555;
+
+  /* ===== Background ===== */
+  --color-bg: #ffffff;
+  --color-bg-light: #f8fafc;
+
+  /* ===== Borders ===== */
+  --color-border: #e5e7eb;
+
+  /* ===== Fonts ===== */
+  --font-heading: "Poppins", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  /* ===== Radius ===== */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  /* ===== Shadows ===== */
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* ===== Reset ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ===== Headings ===== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  margin: 0;
+  color: var(--color-text);
+}
+
+/* ===== Text ===== */
+p {
+  margin: 0;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+/* ===== Links ===== */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ===== Images ===== */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ===== Containers ===== */
+.container {
+  width: 100%;
+  max-width: 1440px;   /* increased site width */
+  margin-inline: auto;
+  padding-inline: 4.5rem; /* 32px side spacing */
+}
+
+/* Large screens wider feel */
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1560px;
+  }
+}
+
+
+/* ===== Section spacing ===== */
+.section {
+  padding: 80px 0;
+}
+
+@media (max-width: 1024px) {
+  .section {
+    padding: 64px 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 48px 0;
+  }
+}
+
+/* ===== Brand utilities ===== */
+.text-primary {
+  color: var(--color-primary);
+}
+
+.bg-primary {
+  background: var(--color-primary);
+}
+
+.text-accent {
+  color: var(--color-accent);
+}
+
+.bg-accent {
+  background: var(--color-accent);
+}
+
+.bg-light {
+  background: var(--color-bg-light);
+}
+
+.border-default {
+  border: 1px solid var(--color-border);
+}
+
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+.perspective-\[1000px\] {
+  perspective: 1000px;
+}
+
