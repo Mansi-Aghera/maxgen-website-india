@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation"
 import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
+import FloatingCTA from "@/components/layout/FloatingCTA"
 
 export default function ClientLayout({
   children,
@@ -21,6 +22,7 @@ export default function ClientLayout({
       <Navbar />
       {children}
       <Footer />
+      <FloatingCTA />
     </>
   )
 }

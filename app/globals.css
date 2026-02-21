@@ -167,3 +167,8 @@ img {
   perspective: 1000px;
 }
 
+.writing-vertical {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  letter-spacing: 0.5px;
+}
