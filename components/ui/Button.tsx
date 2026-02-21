@@ -360,6 +360,7 @@ interface ButtonProps {
   className?: string
   onClick?: () => void   // ✅ added
   type?: "button" | "submit" | "reset" // ✅ added
+    disabled?: boolean 
 }
 
 export default function Button({
