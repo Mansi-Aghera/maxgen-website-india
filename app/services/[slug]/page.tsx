@@ -35,8 +35,8 @@ export default async function ServiceSlugPage({
   if (!service) return notFound()
 
   return <><ServiceReadMore service={service} />
+  <WhyChoose />
   <FAQ />
   <Testimonials />
-  <WhyChoose />
   </>
 }
