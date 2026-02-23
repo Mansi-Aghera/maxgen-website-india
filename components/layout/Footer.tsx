@@ -83,10 +83,10 @@ export default function Footer() {
           </div>
 
           {/* SOCIAL (unchanged) */}
-          <div className="flex gap-3 pt-2">
-            <SocialIcon href="#" icon={<Facebook size={16} />} />
-            <SocialIcon href="#" icon={<Instagram size={16} />} />
-            <SocialIcon href="#" icon={<Linkedin size={16} />} />
+          <div className="flex gap-3 pt-2 pointer">
+            <SocialIcon href="https://www.facebook.com/maxgentechnologies" icon={<Facebook size={16} />} />
+            <SocialIcon href="https://www.instagram.com/maxgen_technologies/" icon={<Instagram size={16} />} />
+            <SocialIcon href="https://www.linkedin.com/company/maxgen-technologies" icon={<Linkedin size={16} />} />
           </div>
         </div>
       </div>
