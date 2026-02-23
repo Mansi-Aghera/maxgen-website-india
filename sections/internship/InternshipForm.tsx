@@ -506,8 +506,13 @@ export default function InternshipForm({ onClose, variant = "internship" }: Prop
           </select>
         </div>
 
+         <div className="space-y-1">
+  <label className="text-sm font-medium">
+    Upload your Resume
+  </label> </div>
         <input
           type="file"
+          placeholder="Resume"
           onChange={(e) => handleChange("resume", e.target.files?.[0] || null)}
         />
 
