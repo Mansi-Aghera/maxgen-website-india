@@ -13,7 +13,7 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "maxproject.pythonanywhere.com",
-        pathname: "/**",
+        pathname: "/**",        
       },
     ],
   },

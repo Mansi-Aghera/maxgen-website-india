@@ -46,6 +46,7 @@
 //   )
 // }
 
+
 "use client"
 
 import { motion } from "framer-motion"
@@ -121,7 +122,7 @@ export default function ServiceReadMore({ service }: { service: Service }) {
           animate="show"
         >
           {service.description.map((p, i) => (
-            <motion.p key={i} variants={fadeUp}>
+            <motion.p key={i} variants={fadeUp} className="break-words">
               {p}
             </motion.p>
           ))}

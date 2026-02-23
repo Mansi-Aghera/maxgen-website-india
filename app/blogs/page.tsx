@@ -4,6 +4,7 @@ import ServiceQuoteForm from "@/components/services/ServiceQuoteForm"
 
 export default function BlogPage() {
   return (
+    <>
     <Section className="bg-[#f4f6f9]">
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8">
         
@@ -16,5 +17,6 @@ export default function BlogPage() {
         </div>
       </div>
     </Section>
+    </>
   )
 }

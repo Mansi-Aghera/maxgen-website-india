@@ -292,44 +292,41 @@ export default function AboutExpertise() {
           <Heading title="Our Internship Offerings" />
 
           <ul className="mt-8 space-y-3">
-            {[
-              "Python Django",
-              "Machine Learning & Data Science",
-              "PHP Web Development",
-              "Java",
-              "React JS",
-              "Android",
-              "Software Testing",
-              "Flutter",
-              "AWS Solution Architect",
-              "Data Analytics",
-            ].map((item, i) => (
-              <motion.li
-                key={i}
-                initial={{ opacity: 0, x: 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
-              >
-                <Link
-                  href={`/internships#${item
-                    .toLowerCase()
-                    .replace(/\s+/g, "-")}`}
-                  className="group inline-flex items-center gap-3 text-lg font-medium"
-                >
-                  <span className="text-text-muted group-hover:text-accent transition-colors duration-300">
-                    ▸
-                  </span>
+  {[
+    "Python Django",
+    "Machine Learning & Data Science",
+    "PHP Web Development",
+    "Java",
+    "React JS",
+    "Android",
+    "Software Testing",
+    "Flutter",
+    "AWS Solution Architect",
+    "Data Analytics",
+  ].map((item, i) => (
+    <motion.li
+      key={i}
+      initial={{ opacity: 0, x: 40 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: i * 0.05 }}
+    >
+      <Link
+        href="/internship"   
+        className="group inline-flex items-center gap-3 text-lg font-medium"
+      >
+        <span className="text-text-muted group-hover:text-accent transition-colors duration-300">
+          ▸
+        </span>
 
-                  <span className="relative text-text-muted group-hover:text-accent transition-colors duration-300">
-                    {item}
-
-                    <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-accent transition-all duration-300 group-hover:w-full" />
-                  </span>
-                </Link>
-              </motion.li>
-            ))}
-          </ul>
+        <span className="relative text-text-muted group-hover:text-accent transition-colors duration-300">
+          {item}
+          <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-accent transition-all duration-300 group-hover:w-full" />
+        </span>
+      </Link>
+    </motion.li>
+  ))}
+</ul>
         </motion.div>
       </div>
     </Section>

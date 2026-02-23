@@ -1,6 +1,24 @@
+// import { notFound } from "next/navigation"
+// import { services } from "@/data/services"
+// import ServiceReadMore from "@/components/services/ServiceReadMore"
+
+// export default async function ServiceSlugPage({
+//   params,
+// }: {
+//   params: Promise<{ slug: string }>
+// }) {
+//   const { slug } = await params
+
+//   const service = services.find((s) => s.slug === slug)
+
+//   if (!service) return notFound()
+
+//   return <ServiceReadMore service={service} />
+// }
+
 import { notFound } from "next/navigation"
-import { services } from "@/data/services"
 import ServiceReadMore from "@/components/services/ServiceReadMore"
+import { getServiceBySlug } from "@/lib/services"
 
 export default async function ServiceSlugPage({
   params,
@@ -9,7 +27,7 @@ export default async function ServiceSlugPage({
 }) {
   const { slug } = await params
 
-  const service = services.find((s) => s.slug === slug)
+  const service = await getServiceBySlug(slug)
 
   if (!service) return notFound()
 

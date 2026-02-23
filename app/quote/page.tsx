@@ -261,6 +261,7 @@ export default function QuotePage() {
   }
 
   return (
+    <>
     <div className="min-h-screen bg-light flex items-center justify-center px-4">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
@@ -360,5 +361,6 @@ export default function QuotePage() {
         </div>
       </motion.div>
     </div>
+    </>
   )
 }
