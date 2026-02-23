@@ -261,4 +261,5 @@ export default async function Page({
   }
 
   return <BlogDetailClient blog={blog} />
+
 }

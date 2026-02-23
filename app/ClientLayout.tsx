@@ -1,3 +1,34 @@
+// "use client"
+
+// import { usePathname } from "next/navigation"
+// import Navbar from "@/components/layout/Navbar"
+// import Footer from "@/components/layout/Footer"
+// import FloatingCTA from "@/components/layout/FloatingCTA"
+
+// export default function ClientLayout({
+//   children,
+// }: {
+//   children: React.ReactNode
+// }) {
+//   const pathname = usePathname()
+//   const isQuote = pathname.startsWith("/quote")
+
+//   if (isQuote) {
+//     return <>{children}</>
+//   }
+
+//   return (
+//     <>
+//       <Navbar />
+//       {children}
+//       <Footer />
+//       <FloatingCTA />
+//     </>
+//   )
+// }
+
+
+
 "use client"
 
 import { usePathname } from "next/navigation"
@@ -11,16 +42,16 @@ export default function ClientLayout({
   children: React.ReactNode
 }) {
   const pathname = usePathname()
-  const isQuote = pathname.startsWith("/quote")
 
-  if (isQuote) {
+  // quote pages without layout
+  if (pathname.startsWith("/quote")) {
     return <>{children}</>
   }
 
   return (
     <>
       <Navbar />
-      {children}
+      <main>{children}</main>
       <Footer />
       <FloatingCTA />
     </>
