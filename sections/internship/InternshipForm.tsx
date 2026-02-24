@@ -592,17 +592,21 @@ export default function InternshipForm({ onClose, variant = "internship" }: Prop
   return
 }
 
-      setSuccess(true)
+setSuccess(true)
 
-      setForm({
-        full_name: "",
-        email: "",
-        contact: "",
-        address: "",
-        city: "",
-        techonology: "",
-        resume: null,
-      })
+setTimeout(() => {
+  setSuccess(false)
+}, 3000)
+
+setForm({
+  full_name: "",
+  email: "",
+  contact: "",
+  address: "",
+  city: "",
+  techonology: "",
+  resume: null,
+})
     } catch (err) {
       console.error("FORM ERROR:", err)
     } finally {

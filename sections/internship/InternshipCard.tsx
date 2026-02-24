@@ -304,11 +304,11 @@ export default function InternshipCard({
         </div>
 
         {/* APPLY */}
-        <div className="w-full md:w-auto">
+        <div className="">
           <Button
             size="sm"
             onClick={() => setOpen(true)}
-            className="w-full md:w-auto"
+            className=""
           >
             APPLY NOW
           </Button>
