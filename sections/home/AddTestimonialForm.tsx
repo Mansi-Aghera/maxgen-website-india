@@ -123,7 +123,7 @@ export default function AddTestimonialForm({ onClose }: Props) {
         <div className="space-y-1">
           <label className="text-sm font-medium">
             Upload Image
-          </label>
+          </label><br />
           <input
             type="file"
             onChange={(e) =>
