@@ -712,16 +712,15 @@ export default function Navbar() {
         onMouseEnter={() => setIsResourcesOpen(true)}
         onMouseLeave={() => setIsResourcesOpen(false)}
       >
-        <Link
-          href="/blogs"
-          className="flex items-center gap-1 font-medium"
-          style={{
-            color:
-              pathname.startsWith("/blogs") || pathname.startsWith("/faq")
-                ? "var(--color-accent)"
-                : "var(--color-text)",
-          }}
-        >
+       <div
+  className="flex items-center gap-1 font-medium cursor-pointer"
+  style={{
+    color:
+      pathname.startsWith("/blogs") || pathname.startsWith("/faq")
+        ? "var(--color-accent)"
+        : "var(--color-text)",
+  }}
+>
           <motion.span whileHover={{ y: -2 }} className="flex items-center gap-1">
             Resources
             <ChevronUp
@@ -731,7 +730,7 @@ export default function Navbar() {
               }`}
             />
           </motion.span>
-        </Link>
+          </div>
 
         {/* DROPDOWN */}
         <div
