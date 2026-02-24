@@ -76,7 +76,7 @@ import { motion } from "framer-motion"
 
 export default function Story() {
   return (
-    <Section className="bg-white">
+    <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 sm:p-8">
       <motion.div
         initial="hidden"
         whileInView="show"
@@ -151,7 +151,7 @@ export default function Story() {
           providing a user-friendly experience.
         </MotionP>
       </motion.div>
-    </Section>
+    </section>
   )
 }
 
