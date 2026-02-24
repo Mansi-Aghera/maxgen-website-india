@@ -739,13 +739,13 @@ export default function Navbar() {
       isDropdownOpen ? "block" : "hidden"
     }`}
   >
-    <div className="w-[1100px] bg-white shadow-2xl border rounded-xl p-6">
+    <div className="w-[300px] bg-white shadow-2xl border rounded-xl p-6">
       {loading ? (
         <div className="text-center text-gray-400 py-8">
           Loading services...
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        <div className="flex flex-col divide-y">
           {services.map((service: any) => (
   <button
     key={service.id}
