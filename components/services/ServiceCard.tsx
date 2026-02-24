@@ -55,22 +55,24 @@ import { motion } from "framer-motion"
 
 interface ServiceCardProps {
   title: string
-  description: string
+  subject: string
   icon: string
 }
 
 export default function ServiceCard({
   title,
-  description,
+  subject,
   icon,
 }: ServiceCardProps) {
-  return (
-    <motion.div
-      whileHover={{ y: -6 }}
-      transition={{ type: "spring", stiffness: 260, damping: 18 }}
-      className="bg-white rounded-[14px] shadow-md p-6 flex gap-4 items-start hover:shadow-lg transition-shadow duration-300"
-    >
-      {/* GIF icon */}
+return (
+  <motion.div
+    whileHover={{ y: -6 }}
+    transition={{ type: "spring", stiffness: 260, damping: 18 }}
+    className="bg-white rounded-[14px] shadow-md p-6 hover:shadow-lg transition-shadow duration-300"
+    style={{height: "200px"}}
+  >
+    {/* TOP: icon + title */}
+    <div className="flex items-center gap-4">
       <motion.img
         src={icon}
         alt={title}
@@ -79,18 +81,18 @@ export default function ServiceCard({
         transition={{ duration: 0.25 }}
       />
 
-      <div>
-        <h3
-          className="text-[18px] font-semibold text-accent"
-          style={{ fontFamily: "var(--font-heading)" }}
-        >
-          {title}
-        </h3>
+      <h3
+        className="text-[18px] font-semibold text-accent leading-snug"
+        style={{ fontFamily: "var(--font-heading)" }}
+      >
+        {title}
+      </h3>
+    </div>
 
-        <p className="mt-2 text-[15px] leading-relaxed">
-          {description}
-        </p>
-      </div>
-    </motion.div>
-  )
+    {/* BOTTOM: description */}
+    <p className="mt-4 text-[15px] leading-relaxed">
+      {subject}
+    </p>
+  </motion.div>
+)
 }

@@ -142,26 +142,32 @@ import { useEffect, useState } from "react"
 interface Service {
   id: number
   title: string
-  short_description: string
+  subject: string
   image: string
 }
 
 export default function ServicesIntro() {
   const [services, setServices] = useState<Service[]>([])
 
-  useEffect(() => {
-    fetch("https://maxproject.pythonanywhere.com/services/")
-      .then((res) => res.json())
-      .then((data) => {
-        const mapped = data.data.map((s: any) => ({
+useEffect(() => {
+  fetch("https://maxproject.pythonanywhere.com/services/")
+    .then((res) => res.json())
+    .then((data) => {
+      const allowedIds = [11, 5, 4 ,1 ]
+
+      const mapped = allowedIds
+        .map((id) => data.data.find((s: any) => s.id === id))
+        .filter(Boolean)
+        .map((s: any) => ({
           id: s.id,
           title: s.title,
-          short_description: s.short_description,
+          subject: s.subject,
           image: "https://maxproject.pythonanywhere.com" + s.image,
         }))
-        setServices(mapped)
-      })
-  }, [])
+
+      setServices(mapped)
+    })
+}, [])
 
   return (
     <Section className="bg-light">
@@ -187,7 +193,7 @@ export default function ServicesIntro() {
       </motion.div>
 
       <div className="mt-16 grid lg:grid-cols-[1.1fr_1fr] gap-10 items-start">
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, x: -60 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -231,7 +237,64 @@ export default function ServicesIntro() {
               LET’S MEET
             </Button>
           </div>
-        </motion.div>
+        </motion.div> */}
+
+        <motion.div
+  initial={{ opacity: 0, x: -60 }}
+  whileInView={{ opacity: 1, x: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.7 }}
+  className="bg-[#f3f3f3] rounded-[16px] shadow-md p-10"
+>
+  {/* TITLE */}
+  <h3
+    className="text-center text-2xl md:text-[30px] font-semibold"
+    style={{ fontFamily: "var(--font-heading)" }}
+  >
+    Why you should choose Maxgen Technologies
+  </h3>
+
+  {/* CENTER LINE */}
+  <div className="w-24 h-[3px] bg-accent mx-auto mt-4" />
+
+  {/* FEATURES GRID */}
+  <div className="mt-10 grid md:grid-cols-2 gap-x-12 gap-y-8">
+    <div>
+      <h4 className="text-accent font-semibold">
+        | Design Thinking
+      </h4>
+      <p className="mt-2 text-[15px] leading-relaxed">
+        Solution architects may analyze company issues and provide the best
+        solutions.
+      </p>
+    </div>
+
+    <div>
+      <h4 className="text-accent font-semibold">
+        | Domain expertise
+      </h4>
+      <p className="mt-2 text-[15px] leading-relaxed">
+        We understand the problems unique to the sector and use design thinking.
+      </p>
+    </div>
+
+    <div>
+      <h4 className="text-accent font-semibold">
+        | Client experience
+      </h4>
+      <p className="mt-2 text-[15px] leading-relaxed">
+        Several business engagements with proven returns on the solutions used.
+      </p>
+    </div>
+  </div>
+
+  {/* BUTTON RIGHT */}
+  <div className="flex justify-end mt-10">
+    <Button href="/quote" target="_blank" variant="primary" size="md">
+      LET’S MEET
+    </Button>
+  </div>
+</motion.div>
 
         <div className="grid sm:grid-cols-2 gap-6">
           {services.map((s, i) => (
@@ -244,7 +307,7 @@ export default function ServicesIntro() {
             >
               <ServiceCard
                 title={s.title}
-                description={s.short_description}
+                subject={s.subject}
                 icon={s.image}
               />
             </motion.div>

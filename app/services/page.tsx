@@ -100,7 +100,7 @@ export default async function ServicesPage() {
             title={s.title}
             image={s.image}
             slug={s.slug}
-            description={s.description}
+            short_description={s.short_description}
             reverse={i % 2 !== 0}
           />
         ))}
