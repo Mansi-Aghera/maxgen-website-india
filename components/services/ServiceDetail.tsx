@@ -114,6 +114,8 @@ interface Props {
    - ensures line breaks render
    - tolerates editor HTML
    ============================= */
+const cleanHtml = (html: string) =>
+  html?.replace(/^<p[^>]*>/i, "").replace(/<\/p>$/i, "")
 
 const normalizeHtml = (html: string) => {
   if (!html) return ""
@@ -164,7 +166,7 @@ export default function ServiceDetail({
             <img
               src={image}
               alt={title}
-              className="w-[260px] md:w-[300px] object-contain"
+              className="w-[380px] md:w-[420px] object-contain"
             />
           </motion.div>
 
@@ -184,9 +186,10 @@ export default function ServiceDetail({
               {title}
             </h3>
 
-         <p className="text-[15.5px] leading-[28px] text-[#4a5568] max-w-[720px]">
-  {short_description}
-</p>
+<div
+  className="text-[15.5px] leading-[28px] text-[#4a5568] max-w-[720px]"
+  dangerouslySetInnerHTML={{ __html: cleanHtml(short_description) }}
+/>
 
             <Link
               href={`/services/${slug}`}
