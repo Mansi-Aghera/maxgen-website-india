@@ -1299,41 +1299,41 @@ export default function Testimonials() {
               <motion.div
   key={`${t.id}-${i}`}
   {...fadeUp}
-  className="p-6 min-w-[calc(25%-18px)]"
+  className="p-5 sm:p-6 min-w-[85%] sm:min-w-[48%] md:min-w-[32%] lg:min-w-[calc(25%-18px)]"
   style={{
     background: bg,
     borderRadius: "var(--radius-lg)",
     boxShadow: "var(--shadow-md)",
   }}
 >
-                <div className="flex items-center gap-3 mb-4">
-                  <img
-                    src={`https://maxproject.pythonanywhere.com${t.image}`}
-                    alt={t.name}
-                    className="w-10 h-10 rounded-full object-cover"
-                  />
-                  <div>
-                    <p className="font-medium text-sm">{t.name}</p>
-                    {renderStars(t.rating)}
-                  </div>
-                </div>
+  <div className="flex items-center gap-3 mb-4">
+    <img
+      src={`https://maxproject.pythonanywhere.com${t.image}`}
+      alt={t.name}
+      className="w-10 h-10 rounded-full object-cover shrink-0"
+    />
+    <div>
+      <p className="font-medium text-sm sm:text-[15px]">{t.name}</p>
+      {renderStars(t.rating)}
+    </div>
+  </div>
 
-                <p
-                  className="text-xs leading-relaxed opacity-90 break-words"
-                  dangerouslySetInnerHTML={{
-                    __html: limitHtmlWords(t.review, 50),
-                  }}
-                />
+  <p
+    className="text-xs sm:text-sm leading-relaxed opacity-90 break-words"
+    dangerouslySetInnerHTML={{
+      __html: limitHtmlWords(t.review, 50),
+    }}
+  />
 
-                {htmlToText(t.review).split(/\s+/).length > 50 && (
-                  <button
-                    onClick={() => setActive(t)}
-                    className="mt-3 text-xs font-medium text-[var(--color-accent)] hover:underline"
-                  >
-                    Read More
-                  </button>
-                )}
-              </motion.div>
+  {htmlToText(t.review).split(/\s+/).length > 50 && (
+    <button
+      onClick={() => setActive(t)}
+      className="mt-3 text-xs sm:text-sm font-medium text-[var(--color-accent)] hover:underline"
+    >
+      Read More
+    </button>
+  )}
+</motion.div>
             )
           })}
         </motion.div>
