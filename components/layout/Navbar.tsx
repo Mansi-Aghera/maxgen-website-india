@@ -133,7 +133,6 @@
 // // //   );
 // // // }
 
-
 // // "use client"
 
 // // import Link from "next/link"
@@ -354,7 +353,6 @@
 // //     </div>
 // //   )
 // // }
-
 
 // "use client"
 
@@ -595,15 +593,14 @@
 //   )
 // }
 
+"use client";
 
-"use client"
-
-import Link from "next/link"
-import { useState, useEffect } from "react"
-import { usePathname, useRouter } from "next/navigation"
-import { motion, AnimatePresence } from "framer-motion"
-import Button from "@/components/ui/Button"
-import { ChevronUp } from "lucide-react"
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
+import Button from "@/components/ui/Button";
+import { ChevronUp } from "lucide-react";
 
 /* ================= NAV ITEMS ================= */
 
@@ -615,27 +612,27 @@ const navItems = [
   { label: "Career", href: "/career" },
   { label: "About", href: "/about" },
   { label: "Blogs", href: "/blogs" },
-]
+];
 
 /* ================= NAVBAR ================= */
 
 export default function Navbar() {
-  const pathname = usePathname()
-  const router = useRouter()
+  const pathname = usePathname();
+  const router = useRouter();
 
-  const [open, setOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-  const [services, setServices] = useState<any[]>([])
-  const [loading, setLoading] = useState(true)
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [services, setServices] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const makeSlug = (text: string) => {
-  return text
-    .toLowerCase()
-    .replace(/&/g, "and")
-    .replace(/[^a-z0-9\s-]/g, "")
-    .replace(/\s+/g, "-")
-}
+    return text
+      .toLowerCase()
+      .replace(/&/g, "and")
+      .replace(/[^a-z0-9\s-]/g, "")
+      .replace(/\s+/g, "-");
+  };
 
   /* ========= FETCH SERVICES ========= */
   useEffect(() => {
@@ -643,39 +640,39 @@ export default function Navbar() {
       try {
         const res = await fetch(
           "https://maxproject.pythonanywhere.com/services/",
-          { cache: "no-store" }
-        )
-        const json = await res.json()
-        const data = json.data || json.results || json
-        setServices(Array.isArray(data) ? data : [])
+          { cache: "no-store" },
+        );
+        const json = await res.json();
+        const data = json.data || json.results || json;
+        setServices(Array.isArray(data) ? data : []);
       } catch (err) {
-        console.log("Services API error:", err)
+        console.log("Services API error:", err);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
-    fetchServices()
-  }, [])
+    fetchServices();
+  }, []);
 
   /* ========= SCROLL ========= */
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener("scroll", onScroll)
-    return () => window.removeEventListener("scroll", onScroll)
-  }, [])
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   /* ========= CLOSE ON PATH CHANGE ========= */
   useEffect(() => {
-    setIsDropdownOpen(false)
-    setOpen(false)
-  }, [pathname])
+    setIsDropdownOpen(false);
+    setOpen(false);
+  }, [pathname]);
 
- const handleServiceClick = (slug: string) => {
-  if (!slug) return
-  setIsDropdownOpen(false)
-  router.push(`/services/${slug}`)
-}
+  const handleServiceClick = (slug: string) => {
+    if (!slug) return;
+    setIsDropdownOpen(false);
+    router.push(`/services/${slug}`);
+  };
   return (
     <header
       className="w-full sticky top-0 z-50 border-b transition-all duration-300"
@@ -706,74 +703,78 @@ export default function Navbar() {
         <nav className="hidden lg:flex items-center justify-center gap-8">
           {navItems.map((item) =>
             item.dropdown ? (
-             <div
-  key="services"
-  className="relative flex items-center"
-  onMouseEnter={() => setIsDropdownOpen(true)}
-  onMouseLeave={() => setIsDropdownOpen(false)}
->
-  {/* SERVICES LINK */}
-  <Link
-    href="/services"
-    className="flex items-center gap-1 font-medium"
-    style={{
-      color: pathname.startsWith("/services")
-        ? "var(--color-accent)"
-        : "var(--color-text)",
-    }}
-  >
-    <motion.span whileHover={{ y: -2 }} className="flex items-center gap-1">
-      Services
-      <ChevronUp
-        size={14}
-        className={`transition-transform ${
-          isDropdownOpen ? "rotate-180" : ""
-        }`}
-      />
-    </motion.span>
-  </Link>
+              <div
+                key="services"
+                className="relative flex items-center"
+                onMouseEnter={() => setIsDropdownOpen(true)}
+                onMouseLeave={() => setIsDropdownOpen(false)}
+              >
+                {/* SERVICES LINK */}
+                <Link
+                  href="/services"
+                  className="flex items-center gap-1 font-medium"
+                  style={{
+                    color: pathname.startsWith("/services")
+                      ? "var(--color-accent)"
+                      : "var(--color-text)",
+                  }}
+                >
+                  <motion.span
+                    whileHover={{ y: -2 }}
+                    className="flex items-center gap-1"
+                  >
+                    Services
+                    <ChevronUp
+                      size={14}
+                      className={`transition-transform ${
+                        isDropdownOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </motion.span>
+                </Link>
 
-  {/* DROPDOWN */}
-  <div
-    className={`absolute left-1/2 -translate-x-1/2 top-full pt-4 ${
-      isDropdownOpen ? "block" : "hidden"
-    }`}
-  >
-    <div className="w-[300px] bg-white shadow-2xl border rounded-xl p-6">
-      {loading ? (
-        <div className="text-center text-gray-400 py-8">
-          Loading services...
-        </div>
-      ) : (
-        <div className="flex flex-col divide-y">
-          {services.map((service: any) => (
-  <button
-    key={service.id}
-    onClick={() =>
-      handleServiceClick(
-        service.slug || makeSlug(service.title || service.name)
-      )
-    }
-    className="w-full text-left flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 border border-transparent hover:border-gray-200"
-  >
-    <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-50 flex-shrink-0">
-      <img
-        src={`https://maxproject.pythonanywhere.com${service.image}`}
-        alt={service.name}
-        className="w-full h-full object-cover"
-      />
-    </div>
+                {/* DROPDOWN */}
+                <div
+                  className={`absolute left-1/2 -translate-x-1/2 top-full pt-4 ${
+                    isDropdownOpen ? "block" : "hidden"
+                  }`}
+                >
+                  <div className="w-[300px] bg-white shadow-2xl border rounded-xl p-6">
+                    {loading ? (
+                      <div className="text-center text-gray-400 py-8">
+                        Loading services...
+                      </div>
+                    ) : (
+                      <div className="flex flex-col divide-y">
+                        {services.map((service: any) => (
+                          <button
+                            key={service.id}
+                            onClick={() =>
+                              handleServiceClick(
+                                service.slug ||
+                                  makeSlug(service.title || service.name),
+                              )
+                            }
+                            className="w-full text-left flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 border border-transparent hover:border-gray-200"
+                          >
+                            <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-50 flex-shrink-0">
+                              <img
+                                src={`https://maxproject.pythonanywhere.com${service.image}`}
+                                alt={service.name}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
 
-    <span className="text-sm font-medium line-clamp-2">
-      {service.name}
-    </span>
-  </button>
-))}
-        </div>
-      )}
-    </div>
-  </div>
-</div>
+                            <span className="text-sm font-medium line-clamp-2">
+                              {service.name}
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
             ) : (
               <NavLink
                 key={item.label}
@@ -786,7 +787,7 @@ export default function Navbar() {
               >
                 {item.label}
               </NavLink>
-            )
+            ),
           )}
         </nav>
 
@@ -831,7 +832,7 @@ export default function Navbar() {
         )}
       </AnimatePresence>
     </header>
-  )
+  );
 }
 
 /* ================= NAV LINK ================= */
@@ -841,9 +842,9 @@ function NavLink({
   children,
   active,
 }: {
-  href: string
-  children: React.ReactNode
-  active?: boolean
+  href: string;
+  children: React.ReactNode;
+  active?: boolean;
 }) {
   return (
     <motion.div whileHover="hover" className="relative">
@@ -854,9 +855,7 @@ function NavLink({
           color: active ? "var(--color-accent)" : "var(--color-text)",
         }}
       >
-        <motion.span variants={{ hover: { y: -2 } }}>
-          {children}
-        </motion.span>
+        <motion.span variants={{ hover: { y: -2 } }}>{children}</motion.span>
 
         <motion.span
           className="absolute left-1/2 -bottom-1 h-[2px]"
@@ -869,7 +868,7 @@ function NavLink({
         />
       </Link>
     </motion.div>
-  )
+  );
 }
 
 /* ================= HAMBURGER ================= */
@@ -890,5 +889,5 @@ function Hamburger({ open }: { open: boolean }) {
         className="absolute left-0 bottom-0 w-6 h-0.5 bg-[var(--color-text)]"
       />
     </div>
-  )
+  );
 }
