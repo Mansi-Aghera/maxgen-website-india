@@ -115,17 +115,10 @@ export default function AddTestimonialForm({ onClose }: Props) {
           placeholder="Review"
           value={form.review}
           onChange={(e) => handleChange("review", e.target.value)}
-          className="w-full border border-[var(--color-border)] rounded-md px-3 py-2"
+          className="w-full border border-[var(--color-border)] rounded-md px-3 py-5"
         />
 
-        <select
-          value={form.status}
-          onChange={(e) => handleChange("status", e.target.value)}
-          className="w-full border border-[var(--color-border)] rounded-md px-3 py-2"
-        >
-          <option value="Active">Active</option>
-          <option value="Inactive">Inactive</option>
-        </select>
+        
 
         <div className="space-y-1">
           <label className="text-sm font-medium">
