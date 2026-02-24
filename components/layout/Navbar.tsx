@@ -611,7 +611,7 @@ const navItems = [
   { label: "Portfolio", href: "/portfolio" },
   { label: "Career", href: "/career" },
   { label: "About", href: "/about" },
-  { label: "Blogs", href: "/blogs" },
+  { label: "Resources", href: "/blogs", dropdown: "resources" },
 ];
 
 /* ================= NAVBAR ================= */
@@ -625,6 +625,7 @@ export default function Navbar() {
   const [services, setServices] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isResourcesOpen, setIsResourcesOpen] = useState(false)
 
   const makeSlug = (text: string) => {
     return text
@@ -663,10 +664,11 @@ export default function Navbar() {
   }, []);
 
   /* ========= CLOSE ON PATH CHANGE ========= */
-  useEffect(() => {
-    setIsDropdownOpen(false);
-    setOpen(false);
-  }, [pathname]);
+ useEffect(() => {
+  setIsDropdownOpen(false)
+  setIsResourcesOpen(false)
+  setOpen(false)
+}, [pathname])
 
   const handleServiceClick = (slug: string) => {
     if (!slug) return;
@@ -701,95 +703,151 @@ export default function Navbar() {
 
         {/* DESKTOP NAV */}
         <nav className="hidden lg:flex items-center justify-center gap-8">
-          {navItems.map((item) =>
-            item.dropdown ? (
-              <div
-                key="services"
-                className="relative flex items-center"
-                onMouseEnter={() => setIsDropdownOpen(true)}
-                onMouseLeave={() => setIsDropdownOpen(false)}
-              >
-                {/* SERVICES LINK */}
-                <Link
-                  href="/services"
-                  className="flex items-center gap-1 font-medium"
-                  style={{
-                    color: pathname.startsWith("/services")
-                      ? "var(--color-accent)"
-                      : "var(--color-text)",
-                  }}
-                >
-                  <motion.span
-                    whileHover={{ y: -2 }}
-                    className="flex items-center gap-1"
-                  >
-                    Services
-                    <ChevronUp
-                      size={14}
-                      className={`transition-transform ${
-                        isDropdownOpen ? "rotate-180" : ""
-                      }`}
-                    />
-                  </motion.span>
-                </Link>
+  {navItems.map((item) =>
+    item.dropdown === "resources" ? (
+      /* ================= RESOURCES DROPDOWN ================= */
+      <div
+        key="resources"
+        className="relative flex items-center"
+        onMouseEnter={() => setIsResourcesOpen(true)}
+        onMouseLeave={() => setIsResourcesOpen(false)}
+      >
+        <Link
+          href="/blogs"
+          className="flex items-center gap-1 font-medium"
+          style={{
+            color:
+              pathname.startsWith("/blogs") || pathname.startsWith("/faq")
+                ? "var(--color-accent)"
+                : "var(--color-text)",
+          }}
+        >
+          <motion.span whileHover={{ y: -2 }} className="flex items-center gap-1">
+            Resources
+            <ChevronUp
+              size={14}
+              className={`transition-transform ${
+                isResourcesOpen ? "rotate-180" : ""
+              }`}
+            />
+          </motion.span>
+        </Link>
 
-                {/* DROPDOWN */}
-                <div
-                  className={`absolute left-1/2 -translate-x-1/2 top-full pt-4 ${
-                    isDropdownOpen ? "block" : "hidden"
-                  }`}
-                >
-                  <div className="w-[300px] bg-white shadow-2xl border rounded-xl p-6">
-                    {loading ? (
-                      <div className="text-center text-gray-400 py-8">
-                        Loading services...
-                      </div>
-                    ) : (
-                      <div className="flex flex-col divide-y">
-                        {services.map((service: any) => (
-                          <button
-                            key={service.id}
-                            onClick={() =>
-                              handleServiceClick(
-                                service.slug ||
-                                  makeSlug(service.title || service.name),
-                              )
-                            }
-                            className="w-full text-left flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 border border-transparent hover:border-gray-200"
-                          >
-                            <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-50 flex-shrink-0">
-                              <img
-                                src={`https://maxproject.pythonanywhere.com${service.image}`}
-                                alt={service.name}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
+        {/* DROPDOWN */}
+        <div
+          className={`absolute left-1/2 -translate-x-1/2 top-full pt-4 ${
+            isResourcesOpen ? "block" : "hidden"
+          }`}
+        >
+          <div className="w-[220px] bg-white shadow-2xl border rounded-xl p-4 flex flex-col gap-2">
+            <button
+              onClick={() => {
+                setIsResourcesOpen(false)
+                router.push("/blogs")
+              }}
+              className="text-left px-4 py-2 rounded-lg hover:bg-gray-50"
+            >
+              Blogs
+            </button>
 
-                            <span className="text-sm font-medium line-clamp-2">
-                              {service.name}
-                            </span>
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
+            <button
+              onClick={() => {
+                setIsResourcesOpen(false)
+                router.push("/faq")
+              }}
+              className="text-left px-4 py-2 rounded-lg hover:bg-gray-50"
+            >
+              FAQ
+            </button>
+          </div>
+        </div>
+      </div>
+    ) : item.dropdown === "services" ? (
+      /* ================= SERVICES DROPDOWN ================= */
+      <div
+        key="services"
+        className="relative flex items-center"
+        onMouseEnter={() => setIsDropdownOpen(true)}
+        onMouseLeave={() => setIsDropdownOpen(false)}
+      >
+        {/* SERVICES LINK */}
+        <Link
+          href="/services"
+          className="flex items-center gap-1 font-medium"
+          style={{
+            color: pathname.startsWith("/services")
+              ? "var(--color-accent)"
+              : "var(--color-text)",
+          }}
+        >
+          <motion.span whileHover={{ y: -2 }} className="flex items-center gap-1">
+            Services
+            <ChevronUp
+              size={14}
+              className={`transition-transform ${
+                isDropdownOpen ? "rotate-180" : ""
+              }`}
+            />
+          </motion.span>
+        </Link>
+
+        {/* SERVICES DROPDOWN */}
+        <div
+          className={`absolute left-1/2 -translate-x-1/2 top-full pt-4 ${
+            isDropdownOpen ? "block" : "hidden"
+          }`}
+        >
+          <div className="w-[300px] bg-white shadow-2xl border rounded-xl p-6">
+            {loading ? (
+              <div className="text-center text-gray-400 py-8">
+                Loading services...
               </div>
             ) : (
-              <NavLink
-                key={item.label}
-                href={item.href}
-                active={
-                  item.href === "/"
-                    ? pathname === "/"
-                    : pathname.startsWith(item.href)
-                }
-              >
-                {item.label}
-              </NavLink>
-            ),
-          )}
-        </nav>
+              <div className="flex flex-col divide-y">
+                {services.map((service: any) => (
+                  <button
+                    key={service.id}
+                    onClick={() =>
+                      handleServiceClick(
+                        service.slug || makeSlug(service.title || service.name)
+                      )
+                    }
+                    className="w-full text-left flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 border border-transparent hover:border-gray-200"
+                  >
+                    <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-50 flex-shrink-0">
+                      <img
+                        src={`https://maxproject.pythonanywhere.com${service.image}`}
+                        alt={service.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+
+                    <span className="text-sm font-medium line-clamp-2">
+                      {service.name}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    ) : (
+      <NavLink
+        key={item.label}
+        href={item.href}
+        active={
+          item.href === "/"
+            ? pathname === "/"
+            : pathname.startsWith(item.href)
+        }
+      >
+        {item.label}
+      </NavLink>
+    )
+  )}
+</nav>
+        
 
         {/* CTA */}
         <div className="hidden lg:flex items-center justify-end">
