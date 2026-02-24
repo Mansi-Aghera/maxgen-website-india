@@ -888,6 +888,8 @@
 //   )
 // }
 
+
+
 "use client"
 
 import { useEffect, useState } from "react"
@@ -897,7 +899,21 @@ import Heading from "@/components/ui/Heading"
 import { fadeUp } from "@/lib/motion"
 import Button from "@/components/ui/Button"
 import AddTestimonialForm from "./AddTestimonialForm"
+const htmlToText = (html: string) => {
+  if (typeof window === "undefined") return html
+  const div = document.createElement("div")
+  div.innerHTML = html
+  return div.textContent || div.innerText || ""
+}
 
+const limitHtmlWords = (html: string, words = 50) => {
+  const text = htmlToText(html)
+  const arr = text.trim().split(/\s+/)
+
+  if (arr.length <= words) return html
+
+  return arr.slice(0, words).join(" ") + "..."
+}
 type Testimonial = {
   id: number
   name: string
@@ -947,6 +963,7 @@ export default function Testimonials() {
     const full = Math.floor(rating)
     const half = rating % 1 >= 0.5
     const empty = 5 - full - (half ? 1 : 0)
+    
 
     return (
       <div className="flex items-center gap-[2px]">
@@ -1035,13 +1052,13 @@ export default function Testimonials() {
 
                 {/* ✅ HTML FIX ONLY */}
                 <p
-                  className="text-xs leading-relaxed opacity-90 break-words"
-                  dangerouslySetInnerHTML={{
-                    __html: limitWords(t.review, 50),
-                  }}
-                />
+  className="text-xs leading-relaxed opacity-90 break-words"
+  dangerouslySetInnerHTML={{
+    __html: limitHtmlWords(t.review, 50),
+  }}
+/>
 
-                {t.review.split(" ").length > 50 && (
+                {htmlToText(t.review).split(/\s+/).length > 50 && (
                   <button
                     onClick={() => setActive(t)}
                     className="mt-3 text-xs font-medium text-[var(--color-accent)] hover:underline"

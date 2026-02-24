@@ -206,24 +206,23 @@ export default function ServiceReadMore({ service }: { service: Service }) {
         </div>
 
         {/* DESCRIPTION */}
-        <motion.div
-          className="mt-10 space-y-4 text-[15px] leading-relaxed"
-          variants={stagger}
-          initial="hidden"
-          animate="show"
-        >
-          {service.description.map((p, i) => (
- <motion.div
-  className="mt-10 space-y-4 text-[15px] leading-relaxed break-words"
+<motion.div
+  className="mt-10 space-y-4 text-[15px] leading-relaxed"
   variants={stagger}
   initial="hidden"
   animate="show"
-  dangerouslySetInnerHTML={{
-    __html: service.description?.join("") || "",
-  }}
-/>
-))}
-        </motion.div>
+>
+  {service.description.map((html, i) => (
+    <motion.div
+      key={i}
+      className="break-words"
+      variants={fadeUp}
+      dangerouslySetInnerHTML={{
+        __html: html,
+      }}
+    />
+  ))}
+</motion.div>
 
       </div>
     </section>
