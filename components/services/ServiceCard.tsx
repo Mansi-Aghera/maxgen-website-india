@@ -66,11 +66,10 @@ export default function ServiceCard({
 }: ServiceCardProps) {
 return (
   <motion.div
-    whileHover={{ y: -6 }}
-    transition={{ type: "spring", stiffness: 260, damping: 18 }}
-    className="bg-white rounded-[14px] shadow-md p-6 hover:shadow-lg transition-shadow duration-300"
-    style={{height: "200px"}}
-  >
+  whileHover={{ y: -6 }}
+  transition={{ type: "spring", stiffness: 260, damping: 18 }}
+  className="bg-white rounded-[14px] shadow-md p-6 hover:shadow-lg transition-shadow duration-300 h-full min-h-[170px] sm:min-h-[180px] md:min-h-[200px]"
+>
     {/* TOP: icon + title */}
     <div className="flex items-center gap-4">
       <motion.img
