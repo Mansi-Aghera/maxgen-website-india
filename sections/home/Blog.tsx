@@ -364,6 +364,8 @@
 //   )
 // }
 
+
+
 "use client"
 
 import { useEffect, useState } from "react"
@@ -420,76 +422,60 @@ export default function Blog() {
       />
 
       {/* Cards */}
-      <div className="mt-12">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={page}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -40 }}
-            transition={{ duration: 0.4 }}
-          >
-            {visiblePosts.map((post, i) => (
-              <motion.div
-                key={post.slug}
-                initial={{ opacity: 0, y: 60 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-              >
-                <Link
-                  href={`/blogs/${post.slug}`}
-                  className="group block rounded-[var(--radius-lg)] overflow-hidden bg-white border border-default shadow-sm hover:shadow-lg transition-all duration-300"
-                >
-                  {/* image */}
-                  <div className="relative overflow-hidden">
-                    <motion.img
-                      src={post.image}
-                      alt={post.title}
-                      className="w-full h-56 object-cover"
-                      whileHover={{ scale: 1.08 }}
-                      transition={{ duration: 0.6 }}
-                    />
-                  </div>
+      {/* CAROUSEL */}
+<div className="mt-12 overflow-hidden">
+  <motion.div
+    className="flex gap-8"
+    animate={{ x: ["0%", "-50%"] }}
+    transition={{
+      duration: 28,
+      ease: "linear",
+      repeat: Infinity,
+    }}
+  >
+    {[...posts, ...posts].map((post, i) => (
+      <motion.div
+        key={post.slug + i}
+        className="min-w-[85%] sm:min-w-[45%] lg:min-w-[30%]"
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: i * 0.05 }}
+      >
+        <Link
+          href={`/blogs/${post.slug}`}
+          className="group block rounded-[var(--radius-lg)] overflow-hidden bg-white border border-default shadow-sm hover:shadow-lg transition-all duration-300 h-full"
+        >
+          {/* image */}
+          <div className="relative overflow-hidden">
+            <motion.img
+              src={post.image}
+              alt={post.title}
+              className="w-full h-56 object-cover"
+              whileHover={{ scale: 1.08 }}
+              transition={{ duration: 0.6 }}
+            />
+          </div>
 
-                  {/* content */}
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold group-hover:text-accent transition-colors duration-300">
-                      {post.title}
-                    </h3>
+          {/* content */}
+          <div className="p-6">
+            <h3 className="text-xl font-semibold group-hover:text-accent transition-colors duration-300">
+              {post.title}
+            </h3>
 
-                    <p className="mt-3 text-sm leading-relaxed">
-                      {post.description}
-                    </p>
+            <p className="mt-3 text-sm leading-relaxed">
+              {post.description}
+            </p>
 
-                    <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-accent">
-                      Read more →
-                    </span>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </motion.div>
-        </AnimatePresence>
-      </div>
+            <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-accent">
+              Read more →
+            </span>
+          </div>
+        </Link>
+      </motion.div>
+    ))}
+  </motion.div>
+</div>
 
-      {/* DOTS */}
-      <div className="flex justify-center gap-3 mt-10">
-        {Array.from({ length: pages }).map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setPage(i)}
-            className="w-3 h-3 rounded-full transition-all"
-            style={{
-              background:
-                i === page
-                  ? "var(--color-accent)"
-                  : "var(--color-border)",
-              transform: i === page ? "scale(1.2)" : "scale(1)",
-            }}
-          />
-        ))}
-      </div>
     </Section>
   )
 }
