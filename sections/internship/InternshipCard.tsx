@@ -247,6 +247,8 @@ type Props = {
   modeIcon?: string
   variant?: "internship" | "job"
   clickable?: boolean
+    hrefBase?: string   // ✅ add
+
 }
 
 export default function InternshipCard({
@@ -259,6 +261,8 @@ export default function InternshipCard({
   modeIcon,
   variant = "internship",
   clickable = true,
+    hrefBase = "internship",  // ✅ default
+
 }: Props) {
   const [open, setOpen] = useState(false)
   const router = useRouter()
@@ -275,7 +279,7 @@ export default function InternshipCard({
         whileInView={fadeUp.whileInView}
         viewport={fadeUp.viewport}
         transition={fadeUp.transition}
-        onClick={() => clickable && router.push(`/internship/${slug}`)}
+        onClick={() => clickable && router.push(`/${hrefBase}/${slug}`)}
         className="
           bg-white
           rounded-[var(--radius-lg)]
