@@ -78,7 +78,7 @@ export async function getServices(): Promise<Service[]> {
     slug: makeSlug(s.title),   // ✅ IMPORTANT
     title: s.title,
     image: BASE + s.image,
-    gif: BASE + s.image,
+    gif: BASE + s.image2,
     short_description: s.short_description,
     description: [s.description],
   }))

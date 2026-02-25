@@ -358,7 +358,7 @@ interface ButtonProps {
   variant?: Variant
   icon?: ReactNode
   className?: string
-  onClick?: () => void   // ✅ added
+  onClick?: React.MouseEventHandler<HTMLButtonElement>   // ✅ added
   type?: "button" | "submit" | "reset" // ✅ added
     disabled?: boolean 
 }
