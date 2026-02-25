@@ -235,8 +235,9 @@ export default function ServiceDetail({
 
   
   return (
-    <Section className="bg-white mt-10 md:mt-14">
-      <div className="mx-auto px-4 sm:px-6">
+    <Section className="bg-light">
+      <div className="bg-white p-10">
+      <div className="">
         <div
           className={`
             flex flex-col lg:flex-row items-center gap-8 lg:gap-0
@@ -285,7 +286,7 @@ export default function ServiceDetail({
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="w-full lg:w-[70%] text-center lg:text-left"
+            className="w-full lg:w-[70%] lg:text-left"
           >
             <h3
               className="
@@ -310,8 +311,9 @@ export default function ServiceDetail({
                 leading-[26px]
                 md:leading-[28px]
                 text-[#4a5568]
-                max-w-[720px]
+                max-w-[830px]
                 mx-auto lg:mx-0
+                text-justify
               "
               dangerouslySetInnerHTML={{
                 __html: cleanHtml(short_description),
@@ -337,6 +339,7 @@ export default function ServiceDetail({
             </Link>
           </motion.div>
         </div>
+      </div>
       </div>
     </Section>
   )

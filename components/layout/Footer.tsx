@@ -407,6 +407,8 @@ export default function Footer() {
   const [services, setServices] = useState<
     { label: string; href: string }[]
   >([])
+  const [scrolled, setScrolled] = useState(false);
+
 
   useEffect(() => {
     fetch("https://maxproject.pythonanywhere.com/services/")
@@ -433,7 +435,18 @@ export default function Footer() {
           
           {/* INFO */}
           <div className="space-y-4">
-            <img src="/logos/logo.png" alt="Maxgen" className="h-10" />
+            <div className="flex items-center">
+          <Link href="/">
+            <img
+              src="/logos/logo.png"
+              alt="Maxgen"
+               width={100}
+               height={50}
+              className=" transition-transform duration-300"
+              style={{ transform: scrolled ? "scale(0.9)" : "scale(1)"}}
+            />
+          </Link>
+        </div>
 
             <p className="text-sm leading-relaxed max-w-md">
               Transforming Businesses through Smart IT Solutions and

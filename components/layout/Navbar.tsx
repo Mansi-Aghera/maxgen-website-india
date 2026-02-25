@@ -1054,8 +1054,10 @@ export default function Navbar() {
             <img
               src="/logos/logo.png"
               alt="Maxgen"
-              className="h-10 w-auto transition-transform duration-300"
-              style={{ transform: scrolled ? "scale(0.9)" : "scale(1)" }}
+               width={100}
+               height={50}
+              className=" transition-transform duration-300"
+              style={{ transform: scrolled ? "scale(0.9)" : "scale(1)"}}
             />
           </Link>
         </div>

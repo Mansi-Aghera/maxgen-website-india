@@ -1,6 +1,8 @@
+
+
 // "use client"
 
-// import { useState } from "react"
+// import { useEffect, useState } from "react"
 // import { motion, AnimatePresence } from "framer-motion"
 // import Section from "@/components/ui/Section"
 // import Heading from "@/components/ui/Heading"
@@ -8,55 +10,43 @@
 // import { ChevronDown } from "lucide-react"
 
 // type FAQ = {
+//   id: number
 //   question: string
-//   title: string
-//   content: string
+//   answer: string
 // }
 
-// const faqs: FAQ[] = [
-//   {
-//     question: "Incomprehensibility or readability? That is the question.",
-//     title: "Content List",
-//     content:
-//       "5 Years Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-//   },
-//   {
-//     question: "Origin and meaning of the Lorem Ipsum text",
-//     title: "Content List",
-//     content:
-//       "5 Years Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-//   },
-//   {
-//     question: "Incomprehensibility or readability? That is the question.",
-//     title: "Content List",
-//     content:
-//       "5 Years Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-//   },
-//   {
-//     question: "Origin and meaning of the Lorem Ipsum text",
-//     title: "Content List",
-//     content:
-//       "5 Years Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-//   },
-// ]
-
 // export default function FAQ() {
+//   const [faqs, setFaqs] = useState<FAQ[]>([])
+
+//   useEffect(() => {
+//     fetch("https://newmaxgenproject.pythonanywhere.com/faqs/")
+//       .then((res) => res.json())
+//       .then((json) => {
+//         const data = json?.data ?? json ?? []
+
+//         const activeFaqs = data.filter((f: any) => f.status === true)
+
+//         const mapped: FAQ[] = activeFaqs.map((f: any) => ({
+//           id: f.id,
+//           question: f.question,
+//           answer: f.answer,
+//         }))
+
+//         setFaqs(mapped)
+//       })
+//       .catch((e) => console.error("FAQ fetch error", e))
+//   }, [])
+
 //   return (
 //     <Section>
-//       <Heading
-//         title="FAQs"
-//         align="center"
-//         className="mb-12"
-//       />
-
-//       <motion.div
-//         {...stagger}
-//         className="grid md:grid-cols-2 gap-6 lg:gap-8"
-//       >
-//         {faqs.map((faq, i) => (
-//           <FAQItem key={i} faq={faq} />
+//       <Heading title="FAQs" align="center" className="mb-12" />
+// <div className="">
+//       <motion.div {...stagger} className="grid md:grid-cols-1 gap-6 lg:gap-8">
+//         {faqs.map((faq) => (
+//           <FAQItem key={faq.id} faq={faq} />
 //         ))}
 //       </motion.div>
+//       </div>
 //     </Section>
 //   )
 // }
@@ -64,7 +54,7 @@
 // /* ================= ITEM ================= */
 
 // function FAQItem({ faq }: { faq: FAQ }) {
-//   const [open, setOpen] = useState(true)
+//   const [open, setOpen] = useState(false)
 
 //   return (
 //     <motion.div
@@ -103,12 +93,8 @@
 //             transition={{ duration: 0.35 }}
 //             className="px-5 pb-5"
 //           >
-//             <h4 className="font-semibold mb-2 text-[var(--color-text)]">
-//               {faq.title}
-//             </h4>
-
 //             <p className="text-sm leading-relaxed text-[var(--color-text-muted)]">
-//               {faq.content}
+//               {faq.answer}
 //             </p>
 //           </motion.div>
 //         )}
@@ -116,7 +102,6 @@
 //     </motion.div>
 //   )
 // }
-
 
 "use client"
 
@@ -141,7 +126,6 @@ export default function FAQ() {
       .then((res) => res.json())
       .then((json) => {
         const data = json?.data ?? json ?? []
-
         const activeFaqs = data.filter((f: any) => f.status === true)
 
         const mapped: FAQ[] = activeFaqs.map((f: any) => ({
@@ -159,11 +143,14 @@ export default function FAQ() {
     <Section>
       <Heading title="FAQs" align="center" className="mb-12" />
 
-      <motion.div {...stagger} className="grid md:grid-cols-2 gap-6 lg:gap-8">
-        {faqs.map((faq) => (
-          <FAQItem key={faq.id} faq={faq} />
-        ))}
-      </motion.div>
+      {/* ✅ Wider responsive container */}
+      <div className="w-full max-w-4xl mx-auto">
+        <motion.div {...stagger} className="grid gap-6 lg:gap-8">
+          {faqs.map((faq) => (
+            <FAQItem key={faq.id} faq={faq} />
+          ))}
+        </motion.div>
+      </div>
     </Section>
   )
 }
@@ -185,16 +172,32 @@ function FAQItem({ faq }: { faq: FAQ }) {
       {/* Header */}
       <button
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between text-left px-5 py-4"
+        className="
+          w-full
+          flex
+          items-start
+          justify-between
+          text-left
+          px-4 sm:px-5 md:px-6
+          py-4 sm:py-5
+          gap-4
+        "
       >
-        <span className="font-medium text-[var(--color-text)]">
+        <span
+          className="
+            font-medium
+            text-[var(--color-text)]
+            text-sm sm:text-[15px] md:text-base
+            leading-snug
+          "
+        >
           {faq.question}
         </span>
 
         <motion.span
           animate={{ rotate: open ? 180 : 0 }}
           transition={{ duration: 0.25 }}
-          className="text-[var(--color-accent)]"
+          className="text-[var(--color-accent)] shrink-0"
         >
           <ChevronDown size={18} />
         </motion.span>
@@ -208,9 +211,17 @@ function FAQItem({ faq }: { faq: FAQ }) {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.35 }}
-            className="px-5 pb-5"
+            className="px-4 sm:px-5 md:px-6 pb-5"
           >
-            <p className="text-sm leading-relaxed text-[var(--color-text-muted)]">
+            <p
+              className="
+                text-sm
+                sm:text-[15px]
+                md:text-base
+                leading-relaxed
+                text-[var(--color-text-muted)]
+              "
+            >
               {faq.answer}
             </p>
           </motion.div>
