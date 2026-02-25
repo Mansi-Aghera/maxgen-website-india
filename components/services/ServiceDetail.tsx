@@ -223,6 +223,8 @@ interface Props {
 const cleanHtml = (html: string) =>
   html?.replace(/^<p[^>]*>/i, "").replace(/<\/p>$/i, "")
 
+
+
 export default function ServiceDetail({
   title,
   short_description,
@@ -230,6 +232,8 @@ export default function ServiceDetail({
   reverse = false,
   slug,
 }: Props) {
+
+  
   return (
     <Section className="bg-white mt-10 md:mt-14">
       <div className="mx-auto px-4 sm:px-6">

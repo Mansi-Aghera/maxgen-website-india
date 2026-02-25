@@ -1173,7 +1173,10 @@ export default function Navbar() {
                         </div>
                       ) : (
                         <div className="flex flex-col divide-y">
-                          {services.map((service: any) => (
+                          {services
+                          .slice()
+                         .sort((a: any, b: any) => a.id - b.id)
+                          .map((service: any) => (
                             <button
                               key={service.id}
                               onClick={() =>

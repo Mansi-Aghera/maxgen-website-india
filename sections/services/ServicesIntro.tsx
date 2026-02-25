@@ -147,13 +147,37 @@ interface Service {
 }
 
 export default function ServicesIntro() {
-  const [services, setServices] = useState<Service[]>([])
+ const [services, setServices] = useState<Service[]>([])
+
+// useEffect(() => {
+//   fetch("https://maxproject.pythonanywhere.com/services/")
+//     .then((res) => res.json())
+//     .then((data) => {
+//       const allowedIds = [11, 5, 4, 1]
+
+//       const mapped = data.data
+//         .filter((s: any) => allowedIds.includes(s.id))
+//         .sort(
+//           (a: any, b: any) =>
+//             allowedIds.indexOf(a.id) - allowedIds.indexOf(b.id)
+//         )
+//         .map((s: any) => ({
+//           id: s.id,
+//           title: s.title,
+//           subject: s.subject,
+//           image: "https://maxproject.pythonanywhere.com" + s.image,
+//         }))
+
+//       setServices(mapped)
+//     })
+// }, [])
+
 
 useEffect(() => {
   fetch("https://maxproject.pythonanywhere.com/services/")
     .then((res) => res.json())
     .then((data) => {
-      const allowedIds = [11, 5, 4 ,1 ]
+      const allowedIds = [1, 4, 5, 11]
 
       const mapped = allowedIds
         .map((id) => data.data.find((s: any) => s.id === id))
@@ -167,7 +191,8 @@ useEffect(() => {
 
       setServices(mapped)
     })
-}, [])
+}, [])   // ✔ run once
+
 
   return (
     <Section className="bg-light">

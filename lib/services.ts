@@ -70,7 +70,10 @@ export async function getServices(): Promise<Service[]> {
   const json = await res.json()
   const data = json.data || []
 
-  return data.map((s: any) => ({
+  return data
+  .slice()
+  .sort((a: any, b: any) => a.id - b.id)
+  .map((s: any) => ({
     id: s.id,
     slug: makeSlug(s.title),   // ✅ IMPORTANT
     title: s.title,
