@@ -282,9 +282,9 @@ export default function Footer() {
 
           <div className="flex flex-wrap gap-6">
             <FooterLink href="/privacy">Privacy Policy</FooterLink>
-            <FooterLink href="#">Terms of use</FooterLink>
-            <FooterLink href="#">Refund Policy</FooterLink>
-            <FooterLink href="#">Payment Policy</FooterLink>
+            <FooterLink href="/terms">Terms of use</FooterLink>
+            <FooterLink href="/refund">Refund Policy</FooterLink>
+            <FooterLink href="/payment">Payment Policy</FooterLink>
           </div>
         </div>
       </div>
