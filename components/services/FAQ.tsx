@@ -200,7 +200,7 @@ function FAQItem({ faq }: { faq: FAQ }) {
         className="w-full flex items-start justify-between text-left px-4 sm:px-5 md:px-6 py-4 sm:py-5 gap-4"
       >
         <span className="font-medium text-[var(--color-text)] text-sm sm:text-[15px] md:text-base leading-snug">
-          {faq.question}
+         <h3> {faq.question} </h3>
         </span>
 
         <motion.span
