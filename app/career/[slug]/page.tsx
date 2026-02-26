@@ -8,9 +8,11 @@ async function getJob(slug: string) {
 
   if (!res.ok) return null
 
-  const data = await res.json()
+  const json = await res.json()
+  const jobs = json?.data ?? []   // ✅ extract array
 
-  const job = data.find((j: any) => j.slug === slug)
+  const job = jobs.find((j: any) => j.slug === slug)
+
   return job ?? null
 }
 
