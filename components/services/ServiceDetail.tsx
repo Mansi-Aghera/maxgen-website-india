@@ -109,7 +109,7 @@ export default function ServiceDetail({
                 leading-[26px]
                 md:leading-[28px]
                 text-[#4a5568]
-                max-w-[830px]
+                max-w-[930px]
                 mx-auto lg:mx-0
                 text-justify
               "
