@@ -43,21 +43,28 @@ export default function Navbar() {
 
   /* ========= FETCH SERVICES ========= */
   useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        const res = await fetch(API.services);
-        const json = await res.json();
-        const data = json.data || json.results || json;
-        setServices(Array.isArray(data) ? data : []);
-      } catch (err) {
-        console.log("Services API error:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchServices = async () => {
+    try {
+      const res = await fetch(API.services);
+      const json = await res.json();
+      const data = json.data || json.results || json;
 
-    fetchServices();
-  }, []);
+      const activeServices = Array.isArray(data)
+        ? data.filter(
+            (s: any) => s?.status?.toLowerCase() === "active"
+          )
+        : [];
+
+      setServices(activeServices);
+    } catch (err) {
+      console.log("Services API error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchServices();
+}, []);
 
   /* ========= SCROLL ========= */
   useEffect(() => {

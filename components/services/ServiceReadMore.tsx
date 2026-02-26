@@ -151,7 +151,7 @@ const stagger = {
 
 export default function ServiceReadMore({ service }: { service: Service }) {
   return (
-    <section className="bg-light py-16">
+    <section className="bg-white py-16">
       <div className="max-w-[1180px] mx-auto px-6">
 
         {/* SECTION HEADING */}
@@ -216,27 +216,47 @@ export default function ServiceReadMore({ service }: { service: Service }) {
         </div>
 
         {/* DESCRIPTION */}
-        <motion.div
-          className="mt-10"
-          variants={stagger}
-          initial="hidden"
-          animate="show"
-        >
-          <motion.div className="grid gap-6">
-            {service.description.map((html, i) => (
-              <motion.div
-                key={i}
-                variants={fadeUp}
-                className="bg-white border rounded-xl p-6 shadow-sm hover:shadow-md transition"
-              >
-                <div
-                  className="prose prose-sm md:prose-base max-w-none text-gray-700"
-                  dangerouslySetInnerHTML={{ __html: html }}
-                />
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
+<motion.div
+  className="mt-10"
+  variants={stagger}
+  initial="hidden"
+  animate="show"
+>
+  <div className="grid gap-6 md:gap-8">
+    {service.description.map((html, i) => (
+      <motion.div
+        key={i}
+        variants={fadeUp}
+        className="
+           bg-light
+          border
+          border-gray-200
+          rounded-xl
+          p-6 md:p-8
+          shadow-sm
+          hover:shadow-md
+          transition-shadow
+        "
+      >
+        <div
+          className="
+            prose
+            prose-sm
+            md:prose-base
+            max-w-none
+            text-gray-700
+            prose-headings:text-primary
+            prose-headings:font-semibold
+            prose-p:leading-relaxed
+            prose-ul:list-disc
+            prose-ul:pl-5
+          "
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
+      </motion.div>
+    ))}
+  </div>
+</motion.div>
 
       </div>
     </section>
