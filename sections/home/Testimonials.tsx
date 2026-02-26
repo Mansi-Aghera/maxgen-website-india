@@ -348,8 +348,8 @@ export default function Testimonials() {
           {loopData.map((t, i) => {
             const bg =
               i % 2 === 0
-                ? "( var(--color-accent)"
-                : "var(--color-primary)"
+                ? "color-mix(in srgb, var(--color-accent) 12%, white)"
+                : "color-mix(in srgb, var(--color-primary) 12%, white)"
 
             return (
               <motion.div

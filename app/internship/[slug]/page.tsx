@@ -97,9 +97,21 @@ export default async function InternshipDetail({
             Internship Description
           </h2>
 
-          <p className="text-muted leading-relaxed whitespace-pre-line">
-            {data.descriptions}
-          </p>
+          <div
+  className="
+    prose
+    prose-sm
+    md:prose-base
+    max-w-none
+    text-gray-700
+    prose-headings:text-primary
+    prose-headings:font-semibold
+    prose-p:leading-relaxed
+    prose-ul:list-disc
+    prose-ul:pl-5
+  "
+  dangerouslySetInnerHTML={{ __html: data.descriptions }}
+/>
         </div>
       </div>
     </div>
