@@ -6,6 +6,7 @@ import { getServiceBySlug } from "@/lib/services"
 import FAQ from "@/components/services/FAQ"
 import Testimonials from "@/sections/home/Testimonials"
 import WhyChoose from "@/components/services/WhyChoose"
+import QuoteCTA from "@/components/services/QuoteCTA"
 
 export default async function ServiceSlugPage({
   params,
@@ -19,6 +20,7 @@ export default async function ServiceSlugPage({
   if (!service) return notFound()
 
   return <><ServiceReadMore service={service} />
+  <QuoteCTA />
   <WhyChoose />
   <FAQ />
   </>

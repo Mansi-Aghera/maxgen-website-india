@@ -13,6 +13,8 @@ interface Props {
   image: string
   reverse?: boolean
   slug: string
+  image2?: string
+  subject?: string
 }
 
 /* HTML CLEANER */
