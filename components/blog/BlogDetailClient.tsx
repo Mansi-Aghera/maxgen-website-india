@@ -74,7 +74,7 @@ export default function BlogDetailClient({ blog }: Props) {
           /> */}
 
           <div
-  className="prose space-y-4 text-[#5c6b73] break-words"
+  className="prose max-w-none text-[#5c6b73] break-words overflow-wrap-anywhere"
   dangerouslySetInnerHTML={{
     __html: blog.content?.join("") || "",
   }}

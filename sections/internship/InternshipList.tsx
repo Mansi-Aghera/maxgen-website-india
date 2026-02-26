@@ -368,6 +368,7 @@ import InternshipCard from "./InternshipCard"
 import { motion } from "framer-motion"
 import { stagger } from "@/lib/motion"
 import { useEffect, useState } from "react"
+import { API } from "@/lib/api"
 
 type Internship = {
   id: number
@@ -396,16 +397,31 @@ export default function InternshipList() {
   const [activeLocation, setActiveLocation] =
     useState<LocationFilter>("all")
 
+  // useEffect(() => {
+  //   fetch("https://maxproject.pythonanywhere.com/career_internship/")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       const activeData: Internship[] = data.filter(
+  //         (i: Internship) => i.status === "active"
+  //       )
+  //       setInternships(activeData)
+  //     })
+  // }, [])
+
   useEffect(() => {
-    fetch("https://maxproject.pythonanywhere.com/career_internship/")
-      .then((res) => res.json())
-      .then((data) => {
-        const activeData: Internship[] = data.filter(
-          (i: Internship) => i.status === "active"
-        )
-        setInternships(activeData)
-      })
-  }, [])
+  fetch(API.internships, { cache: "no-store" })
+    .then((res) => res.json())
+    .then((json) => {
+      const list = json?.data || []
+
+      const active = list.filter(
+        (i: any) => i.status === true || i.status === "active"
+      )
+
+      setInternships(active)
+    })
+    .catch((e) => console.error("Internship fetch error", e))
+}, [])
 
   // ✅ location filter
   const filtered =
