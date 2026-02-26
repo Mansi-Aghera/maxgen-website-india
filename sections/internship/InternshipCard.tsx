@@ -297,13 +297,12 @@ export default function InternshipCard({
       >
         {/* LEFT */}
         <div className="flex items-start sm:items-center gap-4 sm:gap-5 w-full">
-          <Image
-            src={icon}
-            alt={title}
-            width={100}
-            height={100}
-            className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain"
-          />
+         <Image
+  src={icon}
+  alt={`${title} internship`}
+  width={100}
+  height={100}
+/>
 
           <div className="flex-1">
             <h3
