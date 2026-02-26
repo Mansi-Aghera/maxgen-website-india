@@ -133,7 +133,7 @@ export default function JobsList({ active }: Props) {
         {jobs.map((job) => (
           <InternshipCard
             key={job.id}
-            title={`${job.title}`}
+            title={` ${job.title}`}
             icon="/images/internship/internship1.png"
             duration={job.experience_required}
             mode={job.job_type}

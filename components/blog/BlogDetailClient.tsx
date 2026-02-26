@@ -66,12 +66,19 @@ export default function BlogDetailClient({ blog }: Props) {
           </p>
 
           {/* HTML CONTENT */}
-          <div
+          {/* <div
             className="space-y-4 text-[#5c6b73] break-words leading-relaxed"
             dangerouslySetInnerHTML={{
               __html: blog.content?.join("") || "",
             }}
-          />
+          /> */}
+
+          <div
+  className="prose space-y-4 text-[#5c6b73] break-words"
+  dangerouslySetInnerHTML={{
+    __html: blog.content?.join("") || "",
+  }}
+/>
         </motion.div>
 
       </div>
