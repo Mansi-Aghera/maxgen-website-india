@@ -31,9 +31,9 @@ export default function ServiceDetail({
 
   
   return (
-    <Section className="bg-light">
+    <div className="bg-light" style={{padding: "25px 0px"}}>
       <div className="bg-white p-10">
-      <div className="">
+      <div className="p-10">
         <div
           className={`
             flex flex-col lg:flex-row items-center gap-8 lg:gap-0
@@ -137,6 +137,6 @@ export default function ServiceDetail({
         </div>
       </div>
       </div>
-    </Section>
+    </div>
   )
 }
