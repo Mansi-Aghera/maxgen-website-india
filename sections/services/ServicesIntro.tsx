@@ -23,7 +23,7 @@ useEffect(() => {
   fetch("https://maxproject.pythonanywhere.com/services/")
     .then((res) => res.json())
     .then((data) => {
-      const allowedIds = [1, 4, 5, 11]
+      const allowedIds = [29, 32, 33, 34]
 
       const mapped = allowedIds
         .map((id) => data.data.find((s: any) => s.id === id))

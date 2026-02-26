@@ -213,7 +213,6 @@ const quickLinks = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
   { label: "Careers", href: "/career" },
-  { label: "Our Team", href: "#" },
   { label: "Portfolio", href: "/portfolio" },
   { label: "Blog", href: "/blogs" },
   { label: "Contact Us", href: "/contact" },
