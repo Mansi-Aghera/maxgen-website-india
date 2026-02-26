@@ -23,7 +23,6 @@
 //       .then((res) => res.json())
 //       .then((json) => {
 //         const data = json?.data ?? json ?? []
-
 //         const activeFaqs = data.filter((f: any) => f.status === true)
 
 //         const mapped: FAQ[] = activeFaqs.map((f: any) => ({
@@ -40,12 +39,14 @@
 //   return (
 //     <Section>
 //       <Heading title="FAQs" align="center" className="mb-12" />
-// <div className="">
-//       <motion.div {...stagger} className="grid md:grid-cols-1 gap-6 lg:gap-8">
-//         {faqs.map((faq) => (
-//           <FAQItem key={faq.id} faq={faq} />
-//         ))}
-//       </motion.div>
+
+//       {/* ✅ Wider responsive container */}
+//       <div className="w-full max-w-4xl mx-auto">
+//         <motion.div {...stagger} className="grid gap-6 lg:gap-8">
+//           {faqs.map((faq) => (
+//             <FAQItem key={faq.id} faq={faq} />
+//           ))}
+//         </motion.div>
 //       </div>
 //     </Section>
 //   )
@@ -68,16 +69,32 @@
 //       {/* Header */}
 //       <button
 //         onClick={() => setOpen(!open)}
-//         className="w-full flex items-center justify-between text-left px-5 py-4"
+//         className="
+//           w-full
+//           flex
+//           items-start
+//           justify-between
+//           text-left
+//           px-4 sm:px-5 md:px-6
+//           py-4 sm:py-5
+//           gap-4
+//         "
 //       >
-//         <span className="font-medium text-[var(--color-text)]">
+//         <span
+//           className="
+//             font-medium
+//             text-[var(--color-text)]
+//             text-sm sm:text-[15px] md:text-base
+//             leading-snug
+//           "
+//         >
 //           {faq.question}
 //         </span>
 
 //         <motion.span
 //           animate={{ rotate: open ? 180 : 0 }}
 //           transition={{ duration: 0.25 }}
-//           className="text-[var(--color-accent)]"
+//           className="text-[var(--color-accent)] shrink-0"
 //         >
 //           <ChevronDown size={18} />
 //         </motion.span>
@@ -91,9 +108,17 @@
 //             animate={{ height: "auto", opacity: 1 }}
 //             exit={{ height: 0, opacity: 0 }}
 //             transition={{ duration: 0.35 }}
-//             className="px-5 pb-5"
+//             className="px-4 sm:px-5 md:px-6 pb-5"
 //           >
-//             <p className="text-sm leading-relaxed text-[var(--color-text-muted)]">
+//             <p
+//               className="
+//                 text-sm
+//                 sm:text-[15px]
+//                 md:text-base
+//                 leading-relaxed
+//                 text-[var(--color-text-muted)]
+//               "
+//             >
 //               {faq.answer}
 //             </p>
 //           </motion.div>
@@ -103,6 +128,7 @@
 //   )
 // }
 
+
 "use client"
 
 import { useEffect, useState } from "react"
@@ -111,6 +137,7 @@ import Section from "@/components/ui/Section"
 import Heading from "@/components/ui/Heading"
 import { fadeUp, stagger } from "@/lib/motion"
 import { ChevronDown } from "lucide-react"
+import { API } from "@/lib/api"   // ✅ added
 
 type FAQ = {
   id: number
@@ -122,7 +149,7 @@ export default function FAQ() {
   const [faqs, setFaqs] = useState<FAQ[]>([])
 
   useEffect(() => {
-    fetch("https://newmaxgenproject.pythonanywhere.com/faqs/")
+    fetch(API.faqs)   // ✅ using base url
       .then((res) => res.json())
       .then((json) => {
         const data = json?.data ?? json ?? []
@@ -143,7 +170,6 @@ export default function FAQ() {
     <Section>
       <Heading title="FAQs" align="center" className="mb-12" />
 
-      {/* ✅ Wider responsive container */}
       <div className="w-full max-w-4xl mx-auto">
         <motion.div {...stagger} className="grid gap-6 lg:gap-8">
           {faqs.map((faq) => (
@@ -169,28 +195,11 @@ function FAQItem({ faq }: { faq: FAQ }) {
         background: "var(--color-bg-soft)",
       }}
     >
-      {/* Header */}
       <button
         onClick={() => setOpen(!open)}
-        className="
-          w-full
-          flex
-          items-start
-          justify-between
-          text-left
-          px-4 sm:px-5 md:px-6
-          py-4 sm:py-5
-          gap-4
-        "
+        className="w-full flex items-start justify-between text-left px-4 sm:px-5 md:px-6 py-4 sm:py-5 gap-4"
       >
-        <span
-          className="
-            font-medium
-            text-[var(--color-text)]
-            text-sm sm:text-[15px] md:text-base
-            leading-snug
-          "
-        >
+        <span className="font-medium text-[var(--color-text)] text-sm sm:text-[15px] md:text-base leading-snug">
           {faq.question}
         </span>
 
@@ -203,7 +212,6 @@ function FAQItem({ faq }: { faq: FAQ }) {
         </motion.span>
       </button>
 
-      {/* Body */}
       <AnimatePresence initial={false}>
         {open && (
           <motion.div
@@ -213,15 +221,7 @@ function FAQItem({ faq }: { faq: FAQ }) {
             transition={{ duration: 0.35 }}
             className="px-4 sm:px-5 md:px-6 pb-5"
           >
-            <p
-              className="
-                text-sm
-                sm:text-[15px]
-                md:text-base
-                leading-relaxed
-                text-[var(--color-text-muted)]
-              "
-            >
+            <p className="text-sm sm:text-[15px] md:text-base leading-relaxed text-[var(--color-text-muted)]">
               {faq.answer}
             </p>
           </motion.div>
