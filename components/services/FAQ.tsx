@@ -138,6 +138,8 @@ import Heading from "@/components/ui/Heading"
 import { fadeUp, stagger } from "@/lib/motion"
 import { ChevronDown } from "lucide-react"
 import { API } from "@/lib/api"   // ✅ added
+import Testimonials from "@/sections/home/Testimonials"
+import Contact from "@/sections/home/Contact"
 
 type FAQ = {
   id: number
@@ -167,8 +169,8 @@ export default function FAQ() {
   }, [])
 
   return (
-    <Section>
-      <Heading title="FAQs" align="center" className="mb-12" />
+    <div>
+      <Heading title="FAQs" align="center" className="mb-12 mt-12" />
 
       <div className="w-full max-w-4xl mx-auto">
         <motion.div {...stagger} className="grid gap-6 lg:gap-8">
@@ -177,7 +179,10 @@ export default function FAQ() {
           ))}
         </motion.div>
       </div>
-    </Section>
+      <Testimonials />
+      <Contact />
+    </div>
+    
   )
 }
 
@@ -191,13 +196,13 @@ function FAQItem({ faq }: { faq: FAQ }) {
       {...fadeUp}
       className="border rounded-[var(--radius-lg)] overflow-hidden"
       style={{
-        borderColor: "var(--color-border)",
+        borderColor: "var(--color-accent)",
         background: "var(--color-bg-soft)",
       }}
     >
       <button
         onClick={() => setOpen(!open)}
-        className="w-full flex items-start justify-between text-left px-4 sm:px-5 md:px-6 py-4 sm:py-5 gap-4"
+        className="w-full flex items-start justify-between text-left px-4 sm:px-5 md:px-6 py-4 sm:py-5 gap-4 hover:bg-light"
       >
         <span className="font-medium text-[var(--color-text)] text-sm sm:text-[15px] md:text-base leading-snug">
          <h3> {faq.question} </h3>
@@ -218,7 +223,7 @@ function FAQItem({ faq }: { faq: FAQ }) {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.35 }}
+            transition={{ duration: 0.15 }}
             className="px-4 sm:px-5 md:px-6 pb-5"
           >
             <p className="text-sm sm:text-[15px] md:text-base leading-relaxed text-[var(--color-text-muted)]">

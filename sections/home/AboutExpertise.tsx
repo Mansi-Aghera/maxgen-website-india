@@ -210,6 +210,7 @@ import Heading from "@/components/ui/Heading"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { API } from "@/lib/api"   // ✅ BASE URL SYSTEM
+import Button from "@/components/ui/Button"
 
 interface Service {
   id: number
@@ -281,7 +282,11 @@ export default function AboutExpertise() {
             </Link>{" "}
             . Endless ideas, end-to-end services.
           </p>
+          <Button href="/about" variant="primary" size="md" className="mt-12">
+            ABOUT US
+          </Button>
         </motion.div>
+        
       </div>
 
       {/* EXPERTISE */}
@@ -322,6 +327,9 @@ export default function AboutExpertise() {
               </motion.li>
             ))}
           </ul>
+          <Button href="/services" variant="primary" size="md" className="mt-12">
+            ALL SERVICES
+          </Button>
         </motion.div>
 
         <motion.img
@@ -388,6 +396,9 @@ export default function AboutExpertise() {
               </motion.li>
             ))}
           </ul>
+          <Button href="/internship" variant="primary" size="md" className="mt-12">
+            ALL INTERNSHIPS
+          </Button>
         </motion.div>
       </div>
     </Section>

@@ -21,6 +21,5 @@ export default async function ServiceSlugPage({
   return <><ServiceReadMore service={service} />
   <WhyChoose />
   <FAQ />
-  <Testimonials />
   </>
 }

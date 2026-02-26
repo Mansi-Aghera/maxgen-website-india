@@ -55,7 +55,7 @@ export default function WhyChoose() {
         className="absolute inset-0 -z-10"
         style={{
           background:
-            "linear-gradient(180deg, color-mix(in srgb,var(--color-accent) 10%, white) 0%, white 100%)",
+            "",
         }}
       />
 
