@@ -1,4 +1,4 @@
-
+// import Image from "next/image"
 // import InternshipCard from "@/sections/internship/InternshipCard"
 
 // async function getInternship(slug: string) {
@@ -25,7 +25,7 @@
 //     <div className="bg-[var(--color-muted)] py-10">
 //       <div className="max-w-5xl mx-auto px-4">
 
-//         {/* TOP CARD (reused) */}
+//         {/* ✅ reused card */}
 //         <InternshipCard
 //           title={data.title}
 //           icon={`https://maxproject.pythonanywhere.com${data.image}`}
@@ -38,10 +38,7 @@
 
 //         {/* DESCRIPTION */}
 //         <div className="bg-white rounded-[var(--radius-lg)] border border-[var(--color-border)] p-6 mt-6">
-//           <h2
-//             className="text-lg font-semibold mb-4"
-//             style={{ fontFamily: "var(--font-heading)" }}
-//           >
+//           <h2 className="text-lg font-semibold mb-4">
 //             Internship Description
 //           </h2>
 
@@ -55,11 +52,10 @@
 // }
 
 import InternshipCard from "@/sections/internship/InternshipCard"
-import { API, mediaUrl } from "@/lib/api"
 
 async function getInternship(slug: string) {
   const res = await fetch(
-    `${API.internships}${slug}/`,
+    `https://maxproject.pythonanywhere.com/career_internship/${slug}/`,
     { cache: "no-store" }
   )
 
@@ -81,10 +77,10 @@ export default async function InternshipDetail({
     <div className="bg-[var(--color-muted)] py-10">
       <div className="max-w-5xl mx-auto px-4">
 
-        {/* TOP CARD */}
+        {/* TOP CARD (reused) */}
         <InternshipCard
           title={data.title}
-          icon={mediaUrl(data.image)}
+          icon={`https://maxproject.pythonanywhere.com${data.image}`}
           duration={data.experience}
           mode={data.project}
           location={data.location}
