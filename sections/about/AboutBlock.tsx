@@ -1,40 +1,4 @@
-// type Item = {
-//   title: string
-//   desc: string
-// }
 
-// type Props = {
-//   title: string
-//   intro?: string
-//   items: Item[]
-// }
-
-// export default function AboutBlock({ title, intro, items }: Props) {
-//   return (
-//     <section className="py-12">
-//       <div className="max-w-5xl mx-auto">
-//         <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-8">
-//           <h2 className="text-2xl font-semibold text-gray-900">{title}</h2>
-
-//           <div className="h-[3px] w-full bg-red-600 mt-4 mb-6" />
-
-//           {intro && (
-//             <p className="text-gray-700 mb-6 leading-7">{intro}</p>
-//           )}
-
-//           <div className="space-y-6">
-//             {items.map((it, i) => (
-//               <div key={i}>
-//                 <h4 className="font-semibold text-gray-900">{it.title}</h4>
-//                 <p className="text-gray-700">{it.desc}</p>
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       </div>
-//     </section>
-//   )
-// }
 
 "use client"
 

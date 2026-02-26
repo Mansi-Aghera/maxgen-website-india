@@ -1,35 +1,4 @@
-// "use client"
 
-// import Section from "@/components/ui/Section"
-// import { motion } from "framer-motion"
-
-// export default function AboutHero() {
-//   return (
-//     <section className="relative h-[260px] md:h-[320px] flex items-center justify-center overflow-hidden">
-//       {/* background */}
-//       <div
-//         className="absolute inset-0 bg-cover bg-center"
-//         style={{
-//           backgroundImage: "url('/images/about/banner.jpg')",
-//         }}
-//       />
-
-//       {/* overlay */}
-//       <div className="absolute inset-0 bg-[#6fb4c7]/60" />
-
-//       {/* title */}
-//       <motion.h1
-//         initial={{ opacity: 0, y: 30 }}
-//         animate={{ opacity: 1, y: 0 }}
-//         transition={{ duration: 0.6 }}
-//         className="relative text-white text-3xl md:text-4xl font-semibold"
-//         style={{ fontFamily: "var(--font-heading)" }}
-//       >
-//         About Us
-//       </motion.h1>
-//     </section>
-//   )
-// }
 
 "use client"
 

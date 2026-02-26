@@ -25,6 +25,9 @@ export const API = {
   internships: `${API_BASE}/career_internship/`,
   jobs: `${API_BASE}/jobs/`,
   faqs: `${API_BASE}/faqs/`,
+  testimonials: `${API_BASE}/testimonial/`,
+  career: `${API_BASE}/career/`,
+internship: `${API_BASE}/internship/`,
 }
 
 /**

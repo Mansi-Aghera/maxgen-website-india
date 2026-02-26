@@ -1,3 +1,6 @@
+
+// const BASE = "https://maxproject.pythonanywhere.com"
+
 // export interface Service {
 //   id: number
 //   slug: string
@@ -8,13 +11,13 @@
 //   description: string[]
 // }
 
-// const BASE = "https://maxproject.pythonanywhere.com"
-
-// function slugify(text: string) {
+// /* SAME SLUG AS NAVBAR */
+// function makeSlug(text: string) {
 //   return text
 //     .toLowerCase()
-//     .replace(/[^a-z0-9]+/g, "-")
-//     .replace(/(^-|-$)/g, "")
+//     .replace(/&/g, "and")
+//     .replace(/[^a-z0-9\s-]/g, "")
+//     .replace(/\s+/g, "-")
 // }
 
 // export async function getServices(): Promise<Service[]> {
@@ -23,13 +26,17 @@
 //   })
 
 //   const json = await res.json()
+//   const data = json.data || []
 
-//   return json.data.map((s: any) => ({
+//   return data
+//   .slice()
+//   .sort((a: any, b: any) => a.id - b.id)
+//   .map((s: any) => ({
 //     id: s.id,
-//     slug: slugify(s.title),
+//     slug: makeSlug(s.title),   // ✅ IMPORTANT
 //     title: s.title,
 //     image: BASE + s.image,
-//     gif: BASE + s.image,
+//     gif: BASE + s.image2,
 //     short_description: s.short_description,
 //     description: [s.description],
 //   }))
@@ -41,7 +48,7 @@
 // }
 
 
-const BASE = "https://maxproject.pythonanywhere.com"
+import { API, mediaUrl } from "@/lib/api"
 
 export interface Service {
   id: number
@@ -63,7 +70,7 @@ function makeSlug(text: string) {
 }
 
 export async function getServices(): Promise<Service[]> {
-  const res = await fetch(`${BASE}/services/`, {
+  const res = await fetch(API.services, {   // ✅ use API
     cache: "no-store",
   })
 
@@ -71,17 +78,17 @@ export async function getServices(): Promise<Service[]> {
   const data = json.data || []
 
   return data
-  .slice()
-  .sort((a: any, b: any) => a.id - b.id)
-  .map((s: any) => ({
-    id: s.id,
-    slug: makeSlug(s.title),   // ✅ IMPORTANT
-    title: s.title,
-    image: BASE + s.image,
-    gif: BASE + s.image2,
-    short_description: s.short_description,
-    description: [s.description],
-  }))
+    .slice()
+    .sort((a: any, b: any) => a.id - b.id)
+    .map((s: any) => ({
+      id: s.id,
+      slug: makeSlug(s.title),
+      title: s.title,
+      image: mediaUrl(s.image),   // ✅ media helper
+      gif: mediaUrl(s.image2),    // ✅ media helper
+      short_description: s.short_description,
+      description: [s.description],
+    }))
 }
 
 export async function getServiceBySlug(slug: string) {

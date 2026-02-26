@@ -1,3 +1,6 @@
+
+
+
 // "use client"
 
 // import { useState } from "react"
@@ -21,12 +24,35 @@
 //   const [success, setSuccess] = useState(false)
 //   const [error, setError] = useState("")
 
+//   // ✅ validation errors
+//   const [errors, setErrors] = useState({
+//     name: "",
+//     rating: "",
+//     review: "",
+//     image: "",
+//   })
+
 //   const handleChange = (field: string, value: any) => {
 //     setForm((prev) => ({ ...prev, [field]: value }))
 //   }
 
 //   const handleSubmit = async (e: React.FormEvent) => {
 //     e.preventDefault()
+
+//     // ✅ required validation
+//     const newErrors = {
+//       name: !form.name ? "Name is required" : "",
+//       rating: !form.rating ? "Rating is required" : "",
+//       review: !form.review ? "Review is required" : "",
+//       image: !form.image ? "Image is required" : "",
+//     }
+
+//     setErrors(newErrors)
+
+//     if (newErrors.name || newErrors.rating || newErrors.review || newErrors.image) {
+//       return
+//     }
+
 //     setLoading(true)
 //     setError("")
 //     setSuccess(false)
@@ -44,8 +70,13 @@
 //         { method: "POST", body: fd }
 //       )
 
-//       const data = await res.json()
-//       if (!res.ok) throw new Error(JSON.stringify(data))
+//       if (!res.ok) {
+//         const text = await res.text()
+//         console.error(text)
+//         setError("Something went wrong. Please try again.")
+//         setLoading(false)
+//         return
+//       }
 
 //       setSuccess(true)
 //       setForm({
@@ -55,9 +86,15 @@
 //         status: "Active",
 //         image: null,
 //       })
+//       setErrors({
+//         name: "",
+//         rating: "",
+//         review: "",
+//         image: "",
+//       })
 //     } catch (e) {
 //       console.error("TESTIMONIAL POST ERROR:", e)
-//       setError("Something went wrong. Please try again.")
+//       setError("Network error. Please try again.")
 //     } finally {
 //       setLoading(false)
 //     }
@@ -92,44 +129,58 @@
 
 //       {/* FORM */}
 //       <form className="space-y-4" onSubmit={handleSubmit}>
-//         <input
-//           type="text"
-//           placeholder="Name"
-//           value={form.name}
-//           onChange={(e) => handleChange("name", e.target.value)}
-//           className="w-full border border-[var(--color-border)] rounded-md px-3 py-2"
-//         />
+//         <div>
+//           <input
+//             type="text"
+//             placeholder="Name"
+//             value={form.name}
+//             onChange={(e) => handleChange("name", e.target.value)}
+//             className="w-full border border-[var(--color-border)] rounded-md px-3 py-2"
+//           />
+//           {errors.name && (
+//             <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+//           )}
+//         </div>
 
-//         <input
-//           type="number"
-//           step="0.5"
-//           max="5"
-//           min="0"
-//           placeholder="Rating (0-5)"
-//           value={form.rating}
-//           onChange={(e) => handleChange("rating", e.target.value)}
-//           className="w-full border border-[var(--color-border)] rounded-md px-3 py-2"
-//         />
+//         <div>
+//           <input
+//             type="number"
+//             step="0.5"
+//             max="5"
+//             min="0"
+//             placeholder="Rating (0-5)"
+//             value={form.rating}
+//             onChange={(e) => handleChange("rating", e.target.value)}
+//             className="w-full border border-[var(--color-border)] rounded-md px-3 py-2"
+//           />
+//           {errors.rating && (
+//             <p className="text-red-500 text-xs mt-1">{errors.rating}</p>
+//           )}
+//         </div>
 
-//         <textarea
-//           placeholder="Review"
-//           value={form.review}
-//           onChange={(e) => handleChange("review", e.target.value)}
-//           className="w-full border border-[var(--color-border)] rounded-md px-3 py-5"
-//         />
-
-        
+//         <div>
+//           <textarea
+//             placeholder="Review"
+//             value={form.review}
+//             onChange={(e) => handleChange("review", e.target.value)}
+//             className="w-full border border-[var(--color-border)] rounded-md px-3 py-5"
+//           />
+//           {errors.review && (
+//             <p className="text-red-500 text-xs mt-1">{errors.review}</p>
+//           )}
+//         </div>
 
 //         <div className="space-y-1">
-//           <label className="text-sm font-medium">
-//             Upload Image
-//           </label><br />
+//           <label className="text-sm font-medium">Upload Image</label><br />
 //           <input
 //             type="file"
 //             onChange={(e) =>
 //               handleChange("image", e.target.files?.[0] || null)
 //             }
 //           />
+//           {errors.image && (
+//             <p className="text-red-500 text-xs mt-1">{errors.image}</p>
+//           )}
 //         </div>
 
 //         <Button className="w-full mt-2" type="submit">
@@ -148,6 +199,7 @@
 import { useState } from "react"
 import { X } from "lucide-react"
 import Button from "@/components/ui/Button"
+import { API } from "@/lib/api"   // ✅ BASE URL
 
 interface Props {
   onClose: () => void
@@ -166,7 +218,6 @@ export default function AddTestimonialForm({ onClose }: Props) {
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState("")
 
-  // ✅ validation errors
   const [errors, setErrors] = useState({
     name: "",
     rating: "",
@@ -181,7 +232,6 @@ export default function AddTestimonialForm({ onClose }: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    // ✅ required validation
     const newErrors = {
       name: !form.name ? "Name is required" : "",
       rating: !form.rating ? "Rating is required" : "",
@@ -190,10 +240,7 @@ export default function AddTestimonialForm({ onClose }: Props) {
     }
 
     setErrors(newErrors)
-
-    if (newErrors.name || newErrors.rating || newErrors.review || newErrors.image) {
-      return
-    }
+    if (newErrors.name || newErrors.rating || newErrors.review || newErrors.image) return
 
     setLoading(true)
     setError("")
@@ -207,16 +254,15 @@ export default function AddTestimonialForm({ onClose }: Props) {
       fd.append("status", form.status)
       if (form.image) fd.append("image", form.image)
 
-      const res = await fetch(
-        "https://maxproject.pythonanywhere.com/testimonial/",
-        { method: "POST", body: fd }
-      )
+      const res = await fetch(API.testimonials, {   // ✅ BASE URL USED
+        method: "POST",
+        body: fd,
+      })
 
       if (!res.ok) {
         const text = await res.text()
         console.error(text)
         setError("Something went wrong. Please try again.")
-        setLoading(false)
         return
       }
 
@@ -244,7 +290,6 @@ export default function AddTestimonialForm({ onClose }: Props) {
 
   return (
     <div className="p-6 sm:p-8 relative">
-      {/* CLOSE */}
       <button
         onClick={onClose}
         className="absolute right-4 top-4 text-gray-400 hover:text-gray-600"
@@ -252,15 +297,11 @@ export default function AddTestimonialForm({ onClose }: Props) {
         <X size={20} />
       </button>
 
-      {/* HEADER */}
       <div className="flex items-center gap-3 mb-4">
         <div className="w-10 h-10 rounded-full bg-light flex items-center justify-center">
           ⭐
         </div>
-        <h2
-          className="text-xl font-semibold"
-          style={{ fontFamily: "var(--font-heading)" }}
-        >
+        <h2 className="text-xl font-semibold" style={{ fontFamily: "var(--font-heading)" }}>
           Add Testimonial
         </h2>
       </div>
@@ -269,10 +310,9 @@ export default function AddTestimonialForm({ onClose }: Props) {
         Share your experience with us.
       </p>
 
-      {/* FORM */}
-      <form className="space-y-4" onSubmit={handleSubmit}>
-        <div>
-          <input
+       <form className="space-y-4" onSubmit={handleSubmit}>
+         <div>
+           <input
             type="text"
             placeholder="Name"
             value={form.name}
