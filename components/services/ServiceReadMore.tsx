@@ -154,66 +154,7 @@ export default function ServiceReadMore({ service }: { service: Service }) {
     <section className="bg-white py-16">
       <div className="max-w-[1180px] mx-auto px-6">
 
-        {/* SECTION HEADING */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-10"
-        >
-          <h2
-            className="text-3xl md:text-4xl font-semibold"
-            style={{ fontFamily: "var(--font-heading)" }}
-          >
-            Our <span className="text-accent">Services</span>
-          </h2>
-
-          <div className="flex justify-center mt-3 gap-2">
-            <div className="w-10 h-[2px] bg-primary" />
-            <div className="w-6 h-[2px] bg-accent" />
-            <div className="w-10 h-[2px] bg-primary" />
-          </div>
-        </motion.div>
-
-        {/* HERO ROW */}
-        <div className="grid lg:grid-cols-2 gap-12 items-center mb-12">
-
-          {/* LEFT IMAGE */}
-          <motion.div
-            variants={slideLeft}
-            initial="hidden"
-            animate="show"
-            className="flex justify-center lg:justify-start"
-          >
-            <img
-              src={service.image2 || service.gif}
-              alt={service.title}
-              className="w-full max-w-[520px] object-contain"
-            />
-          </motion.div>
-
-          {/* RIGHT TEXT */}
-          <motion.div
-            variants={slideRight}
-            initial="hidden"
-            animate="show"
-            className="text-center lg:text-left"
-          >
-            <h1
-              className="text-[28px] md:text-[34px] lg:text-[40px] font-semibold text-primary leading-tight"
-              style={{ fontFamily: "var(--font-heading)" }}
-            >
-              {service.title}
-            </h1>
-
-            {service.subject && (
-              <p className="mt-4 text-gray-600 text-base md:text-lg max-w-[520px] mx-auto lg:mx-0">
-                {service.subject}
-              </p>
-            )}
-          </motion.div>
-
-        </div>
+        
 
         {/* DESCRIPTION */}
 <motion.div
