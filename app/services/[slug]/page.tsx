@@ -7,6 +7,7 @@ import FAQ from "@/components/services/FAQ"
 import Testimonials from "@/sections/home/Testimonials"
 import WhyChoose from "@/components/services/WhyChoose"
 import QuoteCTA from "@/components/services/QuoteCTA"
+import Contact from "@/sections/home/Contact"
 
 export default async function ServiceSlugPage({
   params,
@@ -22,6 +23,8 @@ export default async function ServiceSlugPage({
   return <><ServiceReadMore service={service} />
   <QuoteCTA />
   <WhyChoose />
-  <FAQ />
+  <FAQ category={service.title} />
+  <Testimonials />
+  <Contact />
   </>
 }
