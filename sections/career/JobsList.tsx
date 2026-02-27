@@ -151,6 +151,82 @@
 // }
 
 
+// "use client"
+
+// import { useEffect, useState } from "react"
+// import Section from "@/components/ui/Section"
+// import InternshipCard from "../internship/InternshipCard"
+// import { motion } from "framer-motion"
+// import { stagger } from "@/lib/motion"
+
+// type Job = {
+//   id: number
+//   title: string
+//   slug: string
+//   description: string
+//   department: string
+//   job_type: string
+//   experience: string
+//   experience_required: string
+//   salary_range: string
+//   location: string
+//   status: string
+// }
+
+// type Props = {
+//   active: "freshers" | "experienced"
+// }
+
+// export default function JobsList({ active }: Props) {
+//   const [jobs, setJobs] = useState<Job[]>([])
+
+//   useEffect(() => {
+//     fetch("https://maxproject.pythonanywhere.com/jobs/")
+//       .then((res) => res.json())
+//       .then((json) => {
+//         const data = json?.data ?? []
+
+//         // ✅ status filter
+//         const activeJobs = data.filter((j: Job) => j.status === "active")
+
+//         setJobs(activeJobs)
+//       })
+//   }, [])
+
+//   // ✅ experience filter
+//   const filtered =
+//     active === "freshers"
+//       ? jobs.filter((j) => j.experience?.toLowerCase() === "fresher")
+//       : jobs.filter((j) => j.experience?.toLowerCase() !== "fresher")
+
+//   return (
+//     <Section>
+//       <motion.div
+//         variants={stagger}
+//         initial="initial"
+//         whileInView="whileInView"
+//         viewport={{ once: true }}
+//         className="space-y-5"
+//       >
+//         {filtered.map((job) => (
+//           <InternshipCard
+//             key={job.id}
+//             title={job.title}
+//             icon="/images/internship/internship1.png"
+//             duration={job.experience_required}
+//             mode={job.job_type}
+//             location={job.location}
+//             slug={job.slug}
+//             modeIcon="💰"
+//             variant="job"
+//             hrefBase="career"
+//           />
+//         ))}
+//       </motion.div>
+//     </Section>
+//   )
+// }
+
 "use client"
 
 import { useEffect, useState } from "react"
@@ -158,6 +234,7 @@ import Section from "@/components/ui/Section"
 import InternshipCard from "../internship/InternshipCard"
 import { motion } from "framer-motion"
 import { stagger } from "@/lib/motion"
+import { API } from "@/lib/api"   // ✅ import API
 
 type Job = {
   id: number
@@ -181,23 +258,30 @@ export default function JobsList({ active }: Props) {
   const [jobs, setJobs] = useState<Job[]>([])
 
   useEffect(() => {
-    fetch("https://maxproject.pythonanywhere.com/jobs/")
+    fetch(API.jobs)   // ✅ replaced URL
       .then((res) => res.json())
       .then((json) => {
         const data = json?.data ?? []
 
-        // ✅ status filter
-        const activeJobs = data.filter((j: Job) => j.status === "active")
+        // status filter
+        const activeJobs = data.filter(
+          (j: Job) => j.status === "active"
+        )
 
         setJobs(activeJobs)
       })
+      .catch((e) => console.error("Jobs fetch error", e))
   }, [])
 
-  // ✅ experience filter
+  // experience filter
   const filtered =
     active === "freshers"
-      ? jobs.filter((j) => j.experience?.toLowerCase() === "fresher")
-      : jobs.filter((j) => j.experience?.toLowerCase() !== "fresher")
+      ? jobs.filter(
+          (j) => j.experience?.toLowerCase() === "fresher"
+        )
+      : jobs.filter(
+          (j) => j.experience?.toLowerCase() !== "fresher"
+        )
 
   return (
     <Section>
