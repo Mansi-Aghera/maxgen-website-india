@@ -24,7 +24,7 @@ export default function PortfolioCard({ title, image, link }: Props) {
       whileHover={{ y: -6 }}
       className="group relative block rounded-[var(--radius-lg)] overflow-hidden bg-white border border-[var(--color-border)] shadow-sm hover:shadow-lg transition-all"
     >
-      <div className="relative aspect-[4/3] overflow-hidden">
+      <div className="relative aspect-[4/4] overflow-hidden">
         <Image
           src={imgSrc}
           alt={title}
