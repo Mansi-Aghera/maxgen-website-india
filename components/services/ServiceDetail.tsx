@@ -389,7 +389,7 @@ export default function ServiceDetail({
                 lg:text-[16px]
                 leading-relaxed
                 text-[#4a5568]
-                max-w-[950px]
+                max-w-[100%]
                 mx-auto lg:mx-0
                 text-justify
               "
