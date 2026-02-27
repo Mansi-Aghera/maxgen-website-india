@@ -360,12 +360,16 @@ export default function ServiceDetail({
 
           {/* CONTENT */}
           <motion.div
-            initial={{ opacity: 0, x: reverse ? -80 : 80 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="w-full lg:w-[65%] text-center lg:text-left"
-          >
+  initial={{ opacity: 0, x: reverse ? -80 : 80 }}
+  whileInView={{ opacity: 1, x: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.7 }}
+  className={`
+    w-full lg:w-[65%]
+    text-center lg:text-left
+    ${!reverse ? "" : "lg:ml-24 xl:ml-28 2xl:ml-32"}
+  `}
+>
             <h3
               className="
                 text-[20px]
