@@ -282,7 +282,7 @@ export default function AboutExpertise() {
             </Link>{" "}
             . Endless ideas, end-to-end services.
           </p>
-          <Button href="/about" variant="primary" size="md" className="mt-12">
+          <Button href="/about" variant="primary" size="lg" className="mt-12">
             ABOUT US
           </Button>
         </motion.div>
