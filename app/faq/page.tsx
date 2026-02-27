@@ -1,10 +1,10 @@
-import FAQ from "@/components/services/FAQ";
+import Faqs from "@/sections/faqs/Faqs";
 
 
 export default function FAQPage() {
   return (
     <>
-      <FAQ />
+      <Faqs />
     </>
   )
 }
