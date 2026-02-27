@@ -294,6 +294,7 @@
 
 import Link from "next/link"
 import { motion } from "framer-motion"
+import Section from "../ui/Section"
 
 interface Props {
   title: string
@@ -317,7 +318,7 @@ export default function ServiceDetail({
     <div className="bg-light py-10">
       
       {/* ✅ MAX WIDTH FIX */}
-      <div className="bg-white px-6 sm:px-8 lg:px-12 py-10 mx-auto">
+      <Section className="bg-white py-10 mx-auto">
 
         <div
           className={`
@@ -360,16 +361,12 @@ export default function ServiceDetail({
 
           {/* CONTENT */}
           <motion.div
-  initial={{ opacity: 0, x: reverse ? -80 : 80 }}
-  whileInView={{ opacity: 1, x: 0 }}
-  viewport={{ once: true }}
-  transition={{ duration: 0.7 }}
-  className={`
-    w-full lg:w-[65%]
-    text-center lg:text-left
-    ${!reverse ? "" : "lg:ml-24 xl:ml-28 2xl:ml-32"}
-  `}
->
+            initial={{ opacity: 0, x: reverse ? -80 : 80 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="w-full lg:w-[65%] text-center lg:text-left"
+          >
             <h3
               className="
                 text-[20px]
@@ -420,7 +417,7 @@ export default function ServiceDetail({
             </Link>
           </motion.div>
         </div>
-      </div>
+      </Section>
     </div>
   )
 }
