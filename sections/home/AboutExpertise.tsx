@@ -370,8 +370,6 @@ export default function AboutExpertise() {
               "PHP Web Development",
               "Java",
               "React JS",
-              "Android",
-              "Software Testing",
               "Flutter",
               "AWS Solution Architect",
               "Data Analytics",
