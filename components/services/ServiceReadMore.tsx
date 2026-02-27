@@ -223,7 +223,8 @@ export default function ServiceReadMore({ service }: { service: Service }) {
   animate="show"
 >
   <div className="grid gap-6 md:gap-8">
-    {service.description.map((html, i) => (
+    {Array.isArray(service.description) &&
+  service.description.map((html, i) => (
       <motion.div
         key={i}
         variants={fadeUp}
@@ -251,7 +252,7 @@ export default function ServiceReadMore({ service }: { service: Service }) {
             prose-ul:list-disc
             prose-ul:pl-5
           "
-          dangerouslySetInnerHTML={{ __html: html }}
+          dangerouslySetInnerHTML={{ __html: html.replace(/&lt;/g,"<").replace(/&gt;/g,">") }}
         />
       </motion.div>
     ))}

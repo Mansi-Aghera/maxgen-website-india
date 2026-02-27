@@ -141,7 +141,15 @@ export async function getServices(): Promise<Service[]> {
       image2: mediaUrl(s.image2),    // ✅ ADD
       subject: s.subject,            // ✅ ADD
       short_description: s.short_description,
-      description: s.descriptions_data || [],
+      description: (() => {
+  try {
+    if (!s.descriptions_data) return []
+    if (Array.isArray(s.descriptions_data)) return s.descriptions_data
+    return JSON.parse(s.descriptions_data)
+  } catch {
+    return []
+  }
+})(),
     }))
 }
 
