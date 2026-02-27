@@ -327,8 +327,8 @@ export default function AboutExpertise() {
               </motion.li>
             ))}
           </ul>
-          <Button href="/services" variant="primary" size="md" className="mt-12">
-            ALL SERVICES
+          <Button href="/services" variant="primary" size="lg" className="mt-12">
+            OUR SERVICES
           </Button>
         </motion.div>
 
@@ -396,8 +396,8 @@ export default function AboutExpertise() {
               </motion.li>
             ))}
           </ul>
-          <Button href="/internship" variant="primary" size="md" className="mt-12">
-            ALL INTERNSHIPS
+          <Button href="/internship" variant="primary" size="lg" className="mt-12">
+            EXPLORE INTERNSHIPS
           </Button>
         </motion.div>
       </div>
