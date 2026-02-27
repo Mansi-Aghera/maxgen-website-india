@@ -317,7 +317,7 @@ export default function ServiceDetail({
     <div className="bg-light py-10">
       
       {/* ✅ MAX WIDTH FIX */}
-      <div className="bg-white px-6 sm:px-8 lg:px-12 py-10 max-w-7xl mx-auto">
+      <div className="bg-white px-6 sm:px-8 lg:px-12 py-10 mx-auto">
 
         <div
           className={`
@@ -389,7 +389,7 @@ export default function ServiceDetail({
                 lg:text-[16px]
                 leading-relaxed
                 text-[#4a5568]
-                max-w-[850px]
+                max-w-[950px]
                 mx-auto lg:mx-0
                 text-justify
               "
