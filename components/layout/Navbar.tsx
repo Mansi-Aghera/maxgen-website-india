@@ -13,9 +13,8 @@ import { API, mediaUrl } from "@/lib/api";
 const navItems = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/services", dropdown: "services" },
-  { label: "Internship", href: "/internship" },
   { label: "Portfolio", href: "/portfolio" },
-  { label: "Career", href: "/career" },
+  { label: "Career", href: "/career", dropdown: "career" }, // updated
   { label: "About", href: "/about" },
   { label: "Resources", href: "/blogs", dropdown: "resources" },
 ];
@@ -32,7 +31,7 @@ export default function Navbar() {
   const [loading, setLoading] = useState(true);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isResourcesOpen, setIsResourcesOpen] = useState(false);
-
+const [isCareerOpen, setIsCareerOpen] = useState(false);
   const makeSlug = (text: string) => {
     return text
       .toLowerCase()
@@ -74,11 +73,12 @@ export default function Navbar() {
   }, []);
 
   /* ========= CLOSE ON PATH CHANGE ========= */
-  useEffect(() => {
-    setIsDropdownOpen(false);
-    setIsResourcesOpen(false);
-    setOpen(false);
-  }, [pathname]);
+ useEffect(() => {
+  setIsDropdownOpen(false);
+  setIsResourcesOpen(false);
+  setIsCareerOpen(false); // add this
+  setOpen(false);
+}, [pathname]);
 
   const handleServiceClick = (slug: string) => {
     if (!slug) return;
@@ -181,7 +181,70 @@ export default function Navbar() {
                 </div>
               );
             }
+/* ================= CAREER ================= */
+if (item.dropdown === "career") {
+  return (
+    <div
+      key="career"
+      className="relative flex items-center"
+      onMouseEnter={() => setIsCareerOpen(true)}
+      onMouseLeave={() => setIsCareerOpen(false)}
+    >
+      <div
+        className="flex items-center gap-1 font-medium cursor-pointer"
+        style={{
+          color:
+            pathname.startsWith("/career") ||
+            pathname.startsWith("/internship")
+              ? "var(--color-accent)"
+              : "var(--color-text)",
+        }}
+      >
+        <motion.span
+          whileHover={{ y: -2 }}
+          className="flex items-center gap-1"
+        >
+          Career
+          <ChevronUp
+            size={14}
+            className={`transition-transform ${
+              isCareerOpen ? "rotate-180" : ""
+            }`}
+          />
+        </motion.span>
+      </div>
 
+      {/* DROPDOWN */}
+      <div
+        className={`absolute left-1/2 -translate-x-1/2 top-full pt-4 ${
+          isCareerOpen ? "block" : "hidden"
+        }`}
+      >
+        <div className="w-[220px] bg-white shadow-2xl border rounded-xl p-4 flex flex-col gap-2">
+          <button
+            onClick={() => {
+              setIsCareerOpen(false);
+              router.push("/internship");
+            }}
+            className="text-left px-4 py-2 rounded-lg hover:bg-gray-50"
+          >
+            Internship
+          </button>
+
+          <button
+            onClick={() => {
+              setIsCareerOpen(false);
+              router.push("/career");
+            }}
+            className="text-left px-4 py-2 rounded-lg hover:bg-gray-50"
+          >
+            Jobs
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
             /* ================= SERVICES ================= */
             if (item.dropdown === "services") {
               return (
