@@ -157,3 +157,8 @@ export async function getServiceBySlug(slug: string) {
   const services = await getServices()
   return services.find((s) => s.slug === slug)
 }
+
+export async function getServiceById(id: number) {
+  const services = await getServices()
+  return services.find((s) => s.id === id)
+}
