@@ -162,7 +162,7 @@ export default function Button({
     border
     border-[#2B3A67]
     text-[#2B3A67]
-    bg-[#E9E9EE]
+    bg-[#ffffff]
     shadow-[4px_4px_0px_#2B3A67]
     transition-all
     duration-200
