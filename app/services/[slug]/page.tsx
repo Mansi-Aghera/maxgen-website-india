@@ -9,6 +9,7 @@ import WhyChoose from "@/components/services/WhyChoose"
 import QuoteCTA from "@/components/services/QuoteCTA"
 import Contact from "@/sections/home/Contact"
 import PageBanner from "@/components/ui/PageBanner"
+import ClientsSection from "@/components/services/ClientsSection"
 
 export default async function ServiceSlugPage({
   params,
@@ -30,6 +31,7 @@ export default async function ServiceSlugPage({
           { label: service.title },
         ]}
       />
+      <ClientsSection />
   <ServiceReadMore service={service} />
   <QuoteCTA />
   <WhyChoose />
