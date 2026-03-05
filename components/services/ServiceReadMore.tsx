@@ -1,5 +1,3 @@
-
-
 // // // "use client"
 
 // // // import { motion } from "framer-motion"
@@ -123,7 +121,6 @@
 // // //   )
 // // // }
 
-
 // // "use client"
 
 // // import { motion } from "framer-motion"
@@ -153,8 +150,6 @@
 // //   return (
 // //     <section className="bg-white py-16">
 // //       <div className="max-w-[1180px] mx-auto px-6">
-
-        
 
 // //         {/* DESCRIPTION */}
 // // <motion.div
@@ -205,29 +200,28 @@
 // //   )
 // // }
 
- 
 // "use client"
- 
+
 // import { useState, useMemo } from "react"
 // import { motion, AnimatePresence } from "framer-motion"
 // import type { Service } from "@/lib/services"
- 
+
 // interface Industry {
 //   name: string
 //   image: string
 //   desc: string
 // }
- 
+
 // function parseIndustries(htmlArray: string[]): Industry[] {
 //   if (typeof window === "undefined") return []
- 
+
 //   const combined = htmlArray.join("")
 //   const cleaned = combined.replace(/&lt;/g, "<").replace(/&gt;/g, ">")
- 
+
 //   const parser = new DOMParser()
 //   const doc = parser.parseFromString(cleaned, "text/html")
 //   const items = doc.querySelectorAll("[data-industry-item]")
- 
+
 //   const result: Industry[] = []
 //   items.forEach((el) => {
 //     const name = el.textContent?.trim() || ""
@@ -235,17 +229,17 @@
 //     const desc = el.getAttribute("data-desc") || ""
 //     if (name) result.push({ name, image, desc })
 //   })
- 
+
 //   return result
 // }
- 
+
 // export default function ServiceReadMore({ service }: { service: Service }) {
 //   const [activeIndex, setActiveIndex] = useState(0)
- 
+
 //   const htmlArray = Array.isArray(service.description) ? service.description : []
- 
+
 //   const industries = useMemo(() => parseIndustries(htmlArray), [htmlArray])
- 
+
 //   // Fallback: if no data-industry-item found, render raw HTML as before
 //   if (!industries.length) {
 //     return (
@@ -266,14 +260,14 @@
 //       </section>
 //     )
 //   }
- 
+
 //   const active = industries[activeIndex]
- 
+
 //   return (
 //     <section className="bg-white py-16">
 //       <div className="max-w-[1180px] mx-auto px-6">
 //         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
- 
+
 //           {/* LEFT: Industry List */}
 //           <div className="flex flex-col divide-y divide-gray-100">
 //             {industries.map((industry, index) => (
@@ -306,7 +300,7 @@
 //               </motion.div>
 //             ))}
 //           </div>
- 
+
 //           {/* RIGHT: Image Card */}
 //           <div className="relative rounded-2xl overflow-hidden shadow-xl h-[420px] bg-gray-200">
 //             <AnimatePresence mode="wait">
@@ -326,10 +320,10 @@
 //                     className="w-full h-full object-cover"
 //                   />
 //                 )}
- 
+
 //                 {/* Gradient Overlay */}
 //                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
- 
+
 //                 {/* Bottom Text */}
 //                 <div className="absolute bottom-0 left-0 right-0 p-6">
 //                   <motion.h3
@@ -352,35 +346,31 @@
 //               </motion.div>
 //             </AnimatePresence>
 //           </div>
- 
+
 //         </div>
 //       </div>
 //     </section>
 //   )
 // }
- 
 
-"use client"
- 
-import { useState, useEffect } from "react"
+"use client";
 
-import { motion, AnimatePresence } from "framer-motion"
+import { useState, useEffect } from "react";
 
-import type { Service } from "@/lib/services"
- 
+import { motion, AnimatePresence } from "framer-motion";
+
+import type { Service } from "@/lib/services";
+
 interface Industry {
+  name: string;
 
-  name: string
+  image: string;
 
-  image: string
-
-  desc: string
-
+  desc: string;
 }
- 
-function parseIndustries(htmlArray: string[]): Industry[] {
 
-  const combined = htmlArray.join("")
+function parseIndustries(htmlArray: string[]): Industry[] {
+  const combined = htmlArray.join("");
 
   const cleaned = combined
 
@@ -388,309 +378,244 @@ function parseIndustries(htmlArray: string[]): Industry[] {
 
     .replace(/&gt;/g, ">")
 
-    .replace(/&amp;/g, "&")
- 
-  const parser = new DOMParser()
+    .replace(/&amp;/g, "&");
 
-  const doc = parser.parseFromString(cleaned, "text/html")
- 
+  const parser = new DOMParser();
+
+  const doc = parser.parseFromString(cleaned, "text/html");
+
   // ── FORMAT 1: data-industry-item ─────────────────────────────
 
-  const dataItems = doc.querySelectorAll("[data-industry-item]")
+  const dataItems = doc.querySelectorAll("[data-industry-item]");
 
   if (dataItems.length > 0) {
+    console.log("✅ FORMAT 1 detected, count:", dataItems.length);
 
-    console.log("✅ FORMAT 1 detected, count:", dataItems.length)
-
-    const result: Industry[] = []
+    const result: Industry[] = [];
 
     dataItems.forEach((el) => {
+      const name = el.textContent?.trim() || "";
 
-      const name = el.textContent?.trim() || ""
+      const image = el.getAttribute("data-image") || "";
 
-      const image = el.getAttribute("data-image") || ""
+      const desc = el.getAttribute("data-desc") || "";
 
-      const desc = el.getAttribute("data-desc") || ""
+      if (name) result.push({ name, image, desc });
+    });
 
-      if (name) result.push({ name, image, desc })
-
-    })
-
-    return result
-
+    return result;
   }
- 
+
   // ── FORMAT 2: font-size:22px sidebar divs ────────────────────
 
-  console.log("✅ FORMAT 2 detected")
+  console.log("✅ FORMAT 2 detected");
 
-  const img = doc.querySelector("img")
+  const img = doc.querySelector("img");
 
-  const singleImage = img?.getAttribute("src") ?? ""
- 
-  let singleDesc = ""
+  const singleImage = img?.getAttribute("src") ?? "";
+
+  let singleDesc = "";
 
   doc.querySelectorAll("p").forEach((p) => {
+    const style = p.getAttribute("style") ?? "";
 
-    const style = p.getAttribute("style") ?? ""
-
-    if (style.includes("#ddd") || style.includes("color:#ddd") || style.includes("color: #ddd")) {
-
-      singleDesc = p.textContent?.trim() ?? ""
-
+    if (
+      style.includes("#ddd") ||
+      style.includes("color:#ddd") ||
+      style.includes("color: #ddd")
+    ) {
+      singleDesc = p.textContent?.trim() ?? "";
     }
+  });
 
-  })
- 
-  const names: string[] = []
+  const names: string[] = [];
 
   doc.querySelectorAll("div").forEach((div) => {
-
-    const style = div.getAttribute("style") ?? ""
+    const style = div.getAttribute("style") ?? "";
 
     const isSidebarItem =
-
       (style.includes("font-size:22px") || style.includes("font-size: 22px")) &&
-
-      !style.includes("flex-direction")
+      !style.includes("flex-direction");
 
     if (isSidebarItem) {
+      const text = div.textContent?.replace("→", "").trim() ?? "";
 
-      const text = div.textContent?.replace("→", "").trim() ?? ""
-
-      if (text.length > 2) names.push(text)
-
+      if (text.length > 2) names.push(text);
     }
+  });
 
-  })
- 
-  if (!names.length) return []
+  if (!names.length) return [];
 
-  return names.map((name) => ({ name, image: singleImage, desc: singleDesc }))
-
+  return names.map((name) => ({ name, image: singleImage, desc: singleDesc }));
 }
- 
+
 export default function ServiceReadMore({ service }: { service: Service }) {
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const [activeIndex, setActiveIndex] = useState(0)
+  const [industries, setIndustries] = useState<Industry[]>([]);
 
-  const [industries, setIndustries] = useState<Industry[]>([])
+  const [mounted, setMounted] = useState(false);
 
-  const [mounted, setMounted] = useState(false)
- 
-  const htmlArray = Array.isArray(service.description) ? service.description : []
- 
+  const htmlArray = Array.isArray(service.description)
+    ? service.description
+    : [];
+
   // ✅ KEY FIX: parse only on CLIENT after mount (window is available)
 
   useEffect(() => {
+    const parsed = parseIndustries(htmlArray);
 
-    const parsed = parseIndustries(htmlArray)
+    console.log("✅ Client parsed industries:", parsed);
 
-    console.log("✅ Client parsed industries:", parsed)
+    setIndustries(parsed);
 
-    setIndustries(parsed)
+    setMounted(true);
+  }, [htmlArray.join("")]);
 
-    setMounted(true)
-
-  }, [htmlArray.join("")])
- 
   // ── Fallback: raw HTML render for ALL other blocks ────────────
 
   // Filter out the industry block from raw render
 
-  const nonIndustryBlocks = htmlArray.filter((html) => !html.includes("data-industry-item"))
- 
+  const nonIndustryBlocks = htmlArray.filter(
+    (html) => !html.includes("data-industry-item"),
+  );
+
   // ── Not yet mounted (SSR) — show nothing or skeleton ─────────
 
   if (!mounted) {
-
     return (
-<section className="bg-white py-16">
-<div className="max-w-[1180px] mx-auto px-6">
-
+      <section className="bg-white py-16">
+        <div className="max-w-[1180px] mx-auto px-6">
           {nonIndustryBlocks.map((html, i) => (
-<div
-
+            <div
               key={i}
-
               className="mb-8"
-
               dangerouslySetInnerHTML={{
-
                 __html: html.replace(/&lt;/g, "<").replace(/&gt;/g, ">"),
-
               }}
-
             />
-
           ))}
-</div>
-</section>
-
-    )
-
+        </div>
+      </section>
+    );
   }
- 
+
   // ── No industries found — render everything as raw HTML ───────
 
   if (!industries.length) {
-
     return (
-<section className="bg-white py-16">
-<div className="max-w-[1180px] mx-auto px-6">
-
+      <section className="bg-white py-16">
+        <div className="max-w-[1180px] mx-auto px-6">
           {htmlArray.map((html, i) => (
-<div
-
-              key={i}
-
-              className="mb-8"
-
-              dangerouslySetInnerHTML={{
-
-                __html: html.replace(/&lt;/g, "<").replace(/&gt;/g, ">"),
-
-              }}
-
-            />
-
+            <div
+  key={i}
+  className="mb-8 tinymce-content"
+  dangerouslySetInnerHTML={{
+    __html: html.replace(/&lt;/g, "<").replace(/&gt;/g, ">"),
+  }}
+/>
           ))}
-</div>
-</section>
-
-    )
-
+        </div>
+      </section>
+    );
   }
- 
-  const active = industries[activeIndex]
- 
+
+  const active = industries[activeIndex];
+
   return (
-<section className="bg-white py-16">
-<div className="max-w-[1180px] mx-auto px-6">
- 
+    <section className="bg-white py-16">
+      <div className="max-w-[1180px] mx-auto px-6">
         {/* ── Render all NON-industry HTML blocks above ── */}
 
         {nonIndustryBlocks.map((html, i) => (
-<div
-
+          <div
             key={i}
-
             className="mb-8"
-
             dangerouslySetInnerHTML={{
-
               __html: html.replace(/&lt;/g, "<").replace(/&gt;/g, ">"),
-
             }}
-
           />
-
         ))}
- 
+
         {/* ── Industries hover section ── */}
-<div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center min-h-[480px] mt-8">
- 
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center min-h-[480px] mt-8">
           {/* LEFT */}
-<div className="flex flex-col divide-y divide-gray-100">
-
+          <div className="flex flex-col divide-y divide-gray-100">
             {industries.map((industry, index) => (
-<motion.div
-
+              <motion.div
                 key={index}
-
                 onMouseEnter={() => setActiveIndex(index)}
-
-                animate={{ color: activeIndex === index ? "#111111" : "#9ca3af" }}
-
+                animate={{
+                  color: activeIndex === index ? "#111111" : "#9ca3af",
+                }}
                 transition={{ duration: 0.2 }}
-
                 className="flex items-center justify-between py-5 cursor-pointer"
->
-<span className={`text-lg transition-all duration-200 ${activeIndex === index ? "font-semibold" : "font-normal"}`}>
-
+              >
+                <span
+                  className={`text-lg transition-all duration-200 ${activeIndex === index ? "font-semibold" : "font-normal"}`}
+                >
                   {industry.name}
-</span>
-<motion.span
-
-                  animate={{ opacity: activeIndex === index ? 1 : 0, x: activeIndex === index ? 0 : -8 }}
-
+                </span>
+                <motion.span
+                  animate={{
+                    opacity: activeIndex === index ? 1 : 0,
+                    x: activeIndex === index ? 0 : -8,
+                  }}
                   transition={{ duration: 0.2 }}
-
                   className="text-gray-800 text-xl"
->
-
+                >
                   →
-</motion.span>
-</motion.div>
-
+                </motion.span>
+              </motion.div>
             ))}
-</div>
- 
+          </div>
+
           {/* RIGHT */}
-<div className="relative rounded-2xl overflow-hidden shadow-xl h-[420px] bg-gray-200">
-<AnimatePresence mode="wait">
-<motion.div
-
+          <div className="relative rounded-2xl overflow-hidden shadow-xl h-[420px] bg-gray-200">
+            <AnimatePresence mode="wait">
+              <motion.div
                 key={activeIndex}
-
                 initial={{ opacity: 0, scale: 1.04 }}
-
                 animate={{ opacity: 1, scale: 1 }}
-
                 exit={{ opacity: 0, scale: 0.97 }}
-
                 transition={{ duration: 0.45, ease: "easeInOut" }}
-
                 className="absolute inset-0"
->
-
+              >
                 {active.image ? (
-<img src={active.image} alt={active.name} className="w-full h-full object-cover" />
-
+                  <img
+                    src={active.image}
+                    alt={active.name}
+                    className="w-full h-full object-cover"
+                  />
                 ) : (
-<div className="w-full h-full bg-gray-300 flex items-center justify-center">
-<span className="text-gray-500 text-sm">No image</span>
-</div>
-
+                  <div className="w-full h-full bg-gray-300 flex items-center justify-center">
+                    <span className="text-gray-500 text-sm">No image</span>
+                  </div>
                 )}
-<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-<div className="absolute bottom-0 left-0 right-0 p-6">
-<motion.h3
-
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-6">
+                  <motion.h3
                     initial={{ opacity: 0, y: 10 }}
-
                     animate={{ opacity: 1, y: 0 }}
-
                     transition={{ duration: 0.35, delay: 0.1 }}
-
                     className="text-white text-xl font-bold mb-2"
->
-
+                  >
                     {active.name}
-</motion.h3>
-<motion.p
-
+                  </motion.h3>
+                  <motion.p
                     initial={{ opacity: 0, y: 12 }}
-
                     animate={{ opacity: 1, y: 0 }}
-
                     transition={{ duration: 0.4, delay: 0.18 }}
-
                     className="text-gray-200 text-sm leading-relaxed"
->
-
+                  >
                     {active.desc}
-</motion.p>
-</div>
-</motion.div>
-</AnimatePresence>
-</div>
- 
+                  </motion.p>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
-</div>
-</section>
-
-  )
-
+      </div>
+    </section>
+  );
 }
- 
