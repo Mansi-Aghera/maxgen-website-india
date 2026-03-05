@@ -360,6 +360,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import type { Service } from "@/lib/services";
+import { h1 } from "framer-motion/client";
 
 interface Industry {
   name: string;
@@ -369,7 +370,14 @@ interface Industry {
   desc: string;
 }
 
+interface NonIndustry {
+  head : string;
+  para : string
+}
+
 function parseIndustries(htmlArray: string[]): Industry[] {
+  // console.log(htmlArray,"abc")
+  // const secondArray = 
   const combined = htmlArray.join("");
 
   const cleaned = combined
@@ -384,6 +392,7 @@ function parseIndustries(htmlArray: string[]): Industry[] {
 
   const doc = parser.parseFromString(cleaned, "text/html");
 
+  console.log(doc,"doc")
   // ── FORMAT 1: data-industry-item ─────────────────────────────
 
   const dataItems = doc.querySelectorAll("[data-industry-item]");
@@ -392,6 +401,7 @@ function parseIndustries(htmlArray: string[]): Industry[] {
     console.log("✅ FORMAT 1 detected, count:", dataItems.length);
 
     const result: Industry[] = [];
+    console.log(dataItems)
 
     dataItems.forEach((el) => {
       const name = el.textContent?.trim() || "";
@@ -402,7 +412,7 @@ function parseIndustries(htmlArray: string[]): Industry[] {
 
       if (name) result.push({ name, image, desc });
     });
-
+    console.log(result)
     return result;
   }
 
@@ -449,17 +459,37 @@ function parseIndustries(htmlArray: string[]): Industry[] {
   return names.map((name) => ({ name, image: singleImage, desc: singleDesc }));
 }
 
+function parseNonIndustries(arr: string[]): NonIndustry[] {
+
+  const combined = arr.join("");
+
+  const doc = new DOMParser().parseFromString(combined, "text/html");
+
+  const heading = doc.querySelector("h1,h2,h3,h4,h5,h6");
+  const paragraph = doc.querySelector("p");
+
+  if (!heading) return [];
+
+  return [{
+    head: heading.textContent?.trim() || "",
+    para: paragraph?.textContent?.trim() || ""
+  }];
+}
+
 export default function ServiceReadMore({ service }: { service: Service }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const [industries, setIndustries] = useState<Industry[]>([]);
+  const [nonIndustries, setNonIndustries] = useState<NonIndustry[]>([]);
+
 
   const [mounted, setMounted] = useState(false);
+  
 
   const htmlArray = Array.isArray(service.description)
     ? service.description
     : [];
-
+  console.log(htmlArray,"pop")
   // ✅ KEY FIX: parse only on CLIENT after mount (window is available)
 
   useEffect(() => {
@@ -479,7 +509,21 @@ export default function ServiceReadMore({ service }: { service: Service }) {
   const nonIndustryBlocks = htmlArray.filter(
     (html) => !html.includes("data-industry-item"),
   );
+console.log(nonIndustryBlocks,"pop123")
+ const IndustryBlocks = htmlArray.filter(
+    (html) => html.includes("data-industry-item"),
+  );
+console.log(IndustryBlocks,"pop12345")
 
+  useEffect(() => {
+    const parsed = parseNonIndustries(IndustryBlocks);
+
+    console.log("✅ Client parsed non industries:", parsed);
+
+    setNonIndustries(parsed);
+
+    setMounted(true);
+  }, [IndustryBlocks.join("")]);
   // ── Not yet mounted (SSR) — show nothing or skeleton ─────────
 
   if (!mounted) {
@@ -508,12 +552,12 @@ export default function ServiceReadMore({ service }: { service: Service }) {
         <div className="max-w-[1180px] mx-auto px-6">
           {htmlArray.map((html, i) => (
             <div
-  key={i}
-  className="mb-8 tinymce-content"
-  dangerouslySetInnerHTML={{
-    __html: html.replace(/&lt;/g, "<").replace(/&gt;/g, ">"),
-  }}
-/>
+              key={i}
+              className="mb-8 tinymce-content"
+              dangerouslySetInnerHTML={{
+                __html: html.replace(/&lt;/g, "<").replace(/&gt;/g, ">"),
+              }}
+            />
           ))}
         </div>
       </section>
@@ -537,8 +581,16 @@ export default function ServiceReadMore({ service }: { service: Service }) {
           />
         ))}
 
+      <div className="mt-8 bg-[#f5f6f8] p-8 rounded-2xl">
+         {nonIndustries.map((html, i) => (
+          <>
+         <h1 className="font-bold text-center text-2xl">{html.head}</h1>
+         <p className="font-semibold text-center text-md">{html.para}</p>
+         </>
+        ))}
+     
         {/* ── Industries hover section ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center min-h-[480px] mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center min-h-[480px] mt-4">
           {/* LEFT */}
           <div className="flex flex-col divide-y divide-gray-100">
             {industries.map((industry, index) => (
@@ -615,6 +667,7 @@ export default function ServiceReadMore({ service }: { service: Service }) {
             </AnimatePresence>
           </div>
         </div>
+         </div>
       </div>
     </section>
   );
