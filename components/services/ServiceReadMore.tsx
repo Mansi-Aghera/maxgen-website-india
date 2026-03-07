@@ -392,16 +392,16 @@ function parseIndustries(htmlArray: string[]): Industry[] {
 
   const doc = parser.parseFromString(cleaned, "text/html");
 
-  console.log(doc,"doc")
+  // console.log(doc,"doc")
   // ── FORMAT 1: data-industry-item ─────────────────────────────
 
   const dataItems = doc.querySelectorAll("[data-industry-item]");
 
   if (dataItems.length > 0) {
-    console.log("✅ FORMAT 1 detected, count:", dataItems.length);
+    // console.log("✅ FORMAT 1 detected, count:", dataItems.length);
 
     const result: Industry[] = [];
-    console.log(dataItems)
+    // console.log(dataItems)
 
     dataItems.forEach((el) => {
       const name = el.textContent?.trim() || "";
@@ -412,13 +412,13 @@ function parseIndustries(htmlArray: string[]): Industry[] {
 
       if (name) result.push({ name, image, desc });
     });
-    console.log(result)
+    // console.log(result)
     return result;
   }
 
   // ── FORMAT 2: font-size:22px sidebar divs ────────────────────
 
-  console.log("✅ FORMAT 2 detected");
+  // console.log("✅ FORMAT 2 detected");
 
   const img = doc.querySelector("img");
 
@@ -489,13 +489,13 @@ export default function ServiceReadMore({ service }: { service: Service }) {
   const htmlArray = Array.isArray(service.description)
     ? service.description
     : [];
-  console.log(htmlArray,"pop")
+  // console.log(htmlArray,"pop")
   // ✅ KEY FIX: parse only on CLIENT after mount (window is available)
 
   useEffect(() => {
     const parsed = parseIndustries(htmlArray);
 
-    console.log("✅ Client parsed industries:", parsed);
+    // console.log("✅ Client parsed industries:", parsed);
 
     setIndustries(parsed);
 
@@ -509,16 +509,16 @@ export default function ServiceReadMore({ service }: { service: Service }) {
   const nonIndustryBlocks = htmlArray.filter(
     (html) => !html.includes("data-industry-item"),
   );
-console.log(nonIndustryBlocks,"pop123")
+// console.log(nonIndustryBlocks,"pop123")
  const IndustryBlocks = htmlArray.filter(
     (html) => html.includes("data-industry-item"),
   );
-console.log(IndustryBlocks,"pop12345")
+// console.log(IndustryBlocks,"pop12345")
 
   useEffect(() => {
     const parsed = parseNonIndustries(IndustryBlocks);
 
-    console.log("✅ Client parsed non industries:", parsed);
+    // console.log("✅ Client parsed non industries:", parsed);
 
     setNonIndustries(parsed);
 

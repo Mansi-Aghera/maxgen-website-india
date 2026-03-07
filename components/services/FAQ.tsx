@@ -535,7 +535,6 @@ function FAQItem({ faq }: { faq: FAQType }) {
       {...fadeUp}
       className="rounded-xl overflow-hidden border"
       style={{
-        borderColor: "var(--color-accent)",
         background: "#ebe6f3",
       }}
     >
