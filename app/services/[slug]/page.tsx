@@ -37,7 +37,6 @@ export default async function ServiceSlugPage({
   <QuoteCTA />
   <WhyChoose />
   <Faqs />
-  <Testimonials />
-  <Contact />
+  
   </>
 }
