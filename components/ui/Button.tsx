@@ -147,8 +147,8 @@ export default function Button({
 
   const sizes: Record<Size, string> = {
     sm: "px-5 py-2 text-sm",
-    md: "px-8 py-3 text-[15px]",
-    lg: "px-10 py-4 text-base",
+    md: "px-6 py-3 text-[15px]",
+    lg: "px-7 py-4 text-base",
   }
 
   const baseClass = `
