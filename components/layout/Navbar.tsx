@@ -384,7 +384,7 @@ if (item.dropdown === "career") {
         )}
       </AnimatePresence> */}
 
-      {/* MOBILE MENU */}
+{/* MOBILE MENU */}
 <AnimatePresence>
   {open && (
     <motion.div
@@ -405,40 +405,77 @@ if (item.dropdown === "career") {
         </Link>
 
         {/* SERVICES */}
-        <div className="flex flex-col">
+        {/* SERVICES */}
+<div className="flex flex-col">
+
+  {/* TITLE + ARROW */}
+  <div className="flex items-center justify-between">
+
+    {/* SERVICES PAGE LINK */}
+    <Link
+      href="/services"
+      onClick={() => setOpen(false)}
+      className="text-lg font-medium"
+    >
+      Services
+    </Link>
+
+    {/* DROPDOWN TOGGLE */}
+    <button
+      onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+      className="p-1"
+    >
+      <ChevronUp
+        size={18}
+        className={`transition-transform ${
+          isDropdownOpen ? "rotate-180" : ""
+        }`}
+      />
+    </button>
+  </div>
+
+  {/* SERVICES LIST */}
+  {isDropdownOpen && (
+    <div className="ml-4 mt-3 flex flex-col gap-2">
+
+      {services
+        .slice()
+        .sort((a: any, b: any) => a.id - b.id)
+        .map((service: any) => (
+
           <button
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="flex justify-between items-center text-lg font-medium"
+            key={service.id}
+            onClick={() => {
+              handleServiceClick(
+                service.slug ||
+                makeSlug(service.title || service.name)
+              )
+              setOpen(false)
+            }}
+            className="flex items-center gap-3 text-left py-2"
           >
-            Services
-            <ChevronUp
-              size={18}
-              className={`transition-transform ${
-                isDropdownOpen ? "rotate-180" : ""
-              }`}
-            />
+
+            {/* ICON */}
+            <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-50 flex-shrink-0">
+              <img
+                src={mediaUrl(service.image)}
+                alt={service.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* NAME */}
+            <span className="text-sm font-medium">
+              {service.name}
+            </span>
+
           </button>
 
-          {isDropdownOpen && (
-            <div className="ml-4 mt-2 flex flex-col gap-2">
-              {services
-                .slice()
-                .sort((a: any, b: any) => a.id - b.id)
-                .map((service: any) => (
-                  <button
-                    key={service.id}
-                    onClick={() => {
-                      handleServiceClick(service.slug);
-                      setOpen(false);
-                    }}
-                    className="text-left text-sm py-1"
-                  >
-                    {service.name}
-                  </button>
-                ))}
-            </div>
-          )}
-        </div>
+        ))}
+
+    </div>
+  )}
+</div>
 
         {/* PORTFOLIO */}
         <Link
@@ -541,6 +578,7 @@ if (item.dropdown === "career") {
     </motion.div>
   )}
 </AnimatePresence>
+
 
     </header>
   );
