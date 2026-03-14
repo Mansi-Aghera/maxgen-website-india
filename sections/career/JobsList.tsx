@@ -234,7 +234,7 @@ import Section from "@/components/ui/Section"
 import InternshipCard from "../internship/InternshipCard"
 import { motion } from "framer-motion"
 import { stagger } from "@/lib/motion"
-import { API } from "@/lib/api"   // ✅ import API
+import { API, mediaUrl } from "@/lib/api"   // ✅ import API
 
 type Job = {
   id: number
@@ -248,6 +248,7 @@ type Job = {
   salary_range: string
   location: string
   status: string
+  image: string
 }
 
 type Props = {
@@ -296,7 +297,7 @@ export default function JobsList({ active }: Props) {
           <InternshipCard
             key={job.id}
             title={job.title}
-            icon="/images/internship/internship1.png"
+            icon={mediaUrl(job.image)}
             duration={job.experience_required}
             mode={job.job_type}
             location={job.location}
