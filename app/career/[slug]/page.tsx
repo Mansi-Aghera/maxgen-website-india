@@ -160,7 +160,7 @@
 
 import InternshipCard from "@/sections/internship/InternshipCard"
 import InternshipSidebar from "@/sections/internship/InternshipSidebar"
-import { API } from "@/lib/api"
+import { API, mediaUrl } from "@/lib/api"
 
 async function getJobs() {
   const res = await fetch(API.jobs, { cache: "no-store" })
@@ -194,7 +194,7 @@ export default async function CareerDetail({
             <div className="mb-8">
               <InternshipCard
                 title={job.title}
-                icon="/images/internship/internship1.png"
+                 icon={mediaUrl(job.image)}
                 duration={job.experience_required}
                 mode={job.job_type}
                 location={job.location}
