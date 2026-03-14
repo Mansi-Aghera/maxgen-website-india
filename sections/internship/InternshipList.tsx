@@ -7,7 +7,7 @@ import InternshipCard from "./InternshipCard"
 import { motion } from "framer-motion"
 import { stagger } from "@/lib/motion"
 import { useEffect, useState } from "react"
-import { API } from "@/lib/api"
+import { API, mediaUrl } from "@/lib/api"
 
 type Internship = {
   id: number
@@ -100,7 +100,7 @@ export default function InternshipList() {
           <InternshipCard
             key={item.id}
             title={item.title}
-            icon={`https://maxproject.pythonanywhere.com${item.image}`}
+            icon={mediaUrl(item.image)}
             duration={item.experience}
             mode={item.project}
             location={item.location}
