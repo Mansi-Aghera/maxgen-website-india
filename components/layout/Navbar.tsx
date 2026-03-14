@@ -360,7 +360,7 @@ if (item.dropdown === "career") {
       </div>
 
       {/* MOBILE MENU */}
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {open && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
@@ -382,7 +382,166 @@ if (item.dropdown === "career") {
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
+
+      {/* MOBILE MENU */}
+<AnimatePresence>
+  {open && (
+    <motion.div
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="lg:hidden border-t"
+    >
+      <div className="container py-6 flex flex-col gap-4">
+
+        {/* HOME */}
+        <Link
+          href="/"
+          onClick={() => setOpen(false)}
+          className="text-lg font-medium"
+        >
+          Home
+        </Link>
+
+        {/* SERVICES */}
+        <div className="flex flex-col">
+          <button
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            className="flex justify-between items-center text-lg font-medium"
+          >
+            Services
+            <ChevronUp
+              size={18}
+              className={`transition-transform ${
+                isDropdownOpen ? "rotate-180" : ""
+              }`}
+            />
+          </button>
+
+          {isDropdownOpen && (
+            <div className="ml-4 mt-2 flex flex-col gap-2">
+              {services
+                .slice()
+                .sort((a: any, b: any) => a.id - b.id)
+                .map((service: any) => (
+                  <button
+                    key={service.id}
+                    onClick={() => {
+                      handleServiceClick(service.slug);
+                      setOpen(false);
+                    }}
+                    className="text-left text-sm py-1"
+                  >
+                    {service.name}
+                  </button>
+                ))}
+            </div>
+          )}
+        </div>
+
+        {/* PORTFOLIO */}
+        <Link
+          href="/portfolio"
+          onClick={() => setOpen(false)}
+          className="text-lg font-medium"
+        >
+          Portfolio
+        </Link>
+
+        {/* CAREER */}
+        <div className="flex flex-col">
+          <button
+            onClick={() => setIsCareerOpen(!isCareerOpen)}
+            className="flex justify-between items-center text-lg font-medium"
+          >
+            Career
+            <ChevronUp
+              size={18}
+              className={`transition-transform ${
+                isCareerOpen ? "rotate-180" : ""
+              }`}
+            />
+          </button>
+
+          {isCareerOpen && (
+            <div className="ml-4 mt-2 flex flex-col gap-2">
+              <Link
+                href="/internship"
+                onClick={() => setOpen(false)}
+                className="text-sm py-1"
+              >
+                Internship
+              </Link>
+
+              <Link
+                href="/career"
+                onClick={() => setOpen(false)}
+                className="text-sm py-1"
+              >
+                Jobs
+              </Link>
+            </div>
+          )}
+        </div>
+
+        {/* ABOUT */}
+        <Link
+          href="/about"
+          onClick={() => setOpen(false)}
+          className="text-lg font-medium"
+        >
+          About
+        </Link>
+
+        {/* RESOURCES */}
+        <div className="flex flex-col">
+          <button
+            onClick={() => setIsResourcesOpen(!isResourcesOpen)}
+            className="flex justify-between items-center text-lg font-medium"
+          >
+            Resources
+            <ChevronUp
+              size={18}
+              className={`transition-transform ${
+                isResourcesOpen ? "rotate-180" : ""
+              }`}
+            />
+          </button>
+
+          {isResourcesOpen && (
+            <div className="ml-4 mt-2 flex flex-col gap-2">
+              <Link
+                href="/blogs"
+                onClick={() => setOpen(false)}
+                className="text-sm py-1"
+              >
+                Blogs
+              </Link>
+
+              <Link
+                href="/faq"
+                onClick={() => setOpen(false)}
+                className="text-sm py-1"
+              >
+                FAQ
+              </Link>
+            </div>
+          )}
+        </div>
+
+        {/* CONTACT BUTTON */}
+        <div className="pt-4">
+          <Button variant="accent" href="/contact">
+            Contact Us
+          </Button>
+        </div>
+
+      </div>
+    </motion.div>
+  )}
+</AnimatePresence>
+
     </header>
   );
 }
