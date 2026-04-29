@@ -24,18 +24,13 @@ const CustomPhoneInput = forwardRef<any, CustomPhoneInputProps>(
     // If underline variant (for Quote page), we use custom inline styles
     // Otherwise, we use the provided className (from the form) or default outline styles
     const containerStyle = isUnderline ? {
-      border: "none",
-      borderBottom: "1px solid var(--color-border)",
-      borderRadius: "0",
-      background: "transparent",
-      padding: "0",
+      
     } : {}
 
     return (
       <div className="w-full">
         <div 
-          className={`phone-input-container ${isUnderline ? "" : className} ${error ? "!border-red-500" : ""}`}
-          style={containerStyle}
+         
         >
           <PhoneInput
             international
