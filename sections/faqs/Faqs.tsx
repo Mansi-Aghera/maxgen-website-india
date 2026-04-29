@@ -27,6 +27,7 @@ export default function Faqs() {
   const [faqs, setFaqs] = useState<FAQ[]>([])
   const [activeCategory, setActiveCategory] = useState<string>("")
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [openFaqId, setOpenFaqId] = useState<number | null>(null)
 
   /* FETCH */
   useEffect(() => {
@@ -134,7 +135,10 @@ export default function Faqs() {
             {categories.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setActiveCategory(cat)}
+                onClick={() => {
+                  setActiveCategory(cat)
+                  setOpenFaqId(null)
+                }}
                 className={`block text-left w-full text-md transition ${
                   activeCategory === cat
                     ? "text-primary font-semibold"
@@ -181,6 +185,7 @@ export default function Faqs() {
                         key={cat}
                         onClick={() => {
                           setActiveCategory(cat)
+                          setOpenFaqId(null)
                           setIsDropdownOpen(false)
                         }}
                         className={`w-full text-left px-4 py-3 rounded-lg text-sm md:text-base font-medium transition-all duration-200 ${
@@ -207,7 +212,12 @@ export default function Faqs() {
 
           <motion.div {...stagger} className="space-y-4">
             {filtered.map((faq) => (
-              <FAQItem key={faq.id} faq={faq} />
+              <FAQItem 
+                key={faq.id} 
+                faq={faq} 
+                isOpen={openFaqId === faq.id}
+                onToggle={() => setOpenFaqId(openFaqId === faq.id ? null : faq.id)}
+              />
             ))}
           </motion.div>
         </div>
@@ -222,9 +232,7 @@ export default function Faqs() {
 
 /* ================= ITEM ================= */
 
-function FAQItem({ faq }: { faq: FAQ }) {
-  const [open, setOpen] = useState(false)
-
+function FAQItem({ faq, isOpen, onToggle }: { faq: FAQ; isOpen: boolean; onToggle: () => void }) {
   return (
     <motion.div
       {...fadeUp}
@@ -235,32 +243,34 @@ function FAQItem({ faq }: { faq: FAQ }) {
       }}
     >
       <button
-        onClick={() => setOpen(!open)}
+        onClick={onToggle}
         className="w-full flex justify-between items-center px-5 py-4 text-left"
       >
-        <span className="font-medium text-sm md:text-base">
+        <span className="font-medium text-sm md:text-base pr-4">
           {faq.question}
         </span>
 
         <motion.span
-          animate={{ rotate: open ? 180 : 0 }}
-          transition={{ duration: 0.25 }}
-          className="text-primary"
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+          className="text-primary flex-shrink-0"
         >
           <ChevronDown size={18} />
         </motion.span>
       </button>
 
       <AnimatePresence initial={false}>
-        {open && (
+        {isOpen && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="px-5 pb-5 text-sm md:text-base text-gray-600"
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="overflow-hidden"
           >
-            {faq.answer}
+            <div className="px-5 pb-5 text-sm md:text-base text-gray-600">
+              {faq.answer}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

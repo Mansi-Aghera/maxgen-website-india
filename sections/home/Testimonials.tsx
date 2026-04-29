@@ -2,8 +2,8 @@
 
 "use client"
 
-import { useEffect, useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useEffect, useState, useRef } from "react"
+import { motion, AnimatePresence, useMotionValue, useAnimationFrame } from "framer-motion"
 import Section from "@/components/ui/Section"
 import Heading from "@/components/ui/Heading"
 import { fadeUp } from "@/lib/motion"
@@ -42,7 +42,32 @@ type Testimonial = {
   rating: number
   review: string
   status: string
+  parsedReview?: string
+  isLong?: boolean
 }
+
+/* ⭐ stars */
+const FullStar = () => (
+  <svg viewBox="0 0 24 24" className="w-4 h-4 fill-yellow-500 shrink-0">
+    <path d="M12 2l2.9 6.1 6.7.9-4.8 4.6 1.2 6.6L12 17.8 6 20.2l1.2-6.6L2.4 9l6.7-.9L12 2z" />
+  </svg>
+)
+const HalfStar = () => (
+  <svg viewBox="0 0 24 24" className="w-4 h-4 shrink-0">
+    <defs>
+      <linearGradient id="half">
+        <stop offset="50%" stopColor="#facc15" />
+        <stop offset="50%" stopColor="#e5e7eb" />
+      </linearGradient>
+    </defs>
+    <path fill="url(#half)" d="M12 2l2.9 6.1 6.7.9-4.8 4.6 1.2 6.6L12 17.8 6 20.2l1.2-6.6L2.4 9l6.7-.9L12 2z" />
+  </svg>
+)
+const EmptyStar = () => (
+  <svg viewBox="0 0 24 24" className="w-4 h-4 fill-gray-300 shrink-0">
+    <path d="M12 2l2.9 6.1 6.7.9-4.8 4.6 1.2 6.6L12 17.8 6 20.2l1.2-6.6L2.4 9l6.7-.9L12 2z" />
+  </svg>
+)
 
 export default function Testimonials() {
   const [data, setData] = useState<Testimonial[]>([])
@@ -50,29 +75,54 @@ export default function Testimonials() {
   const [openForm, setOpenForm] = useState(false)
   const [refresh, setRefresh] = useState(0)
 
+  // Smooth infinite scroll state
+  const containerRef = useRef<HTMLDivElement>(null)
+  const x = useMotionValue(0)
+  const [isDragging, setIsDragging] = useState(false)
+  const isInitialized = useRef(false)
+  const baseVelocity = -1 // adjust speed. -1px per 16ms -> ~60px/sec
 
-  /* ⭐ stars unchanged */
-  const FullStar = () => (
-    <svg viewBox="0 0 24 24" className="w-4 h-4 fill-yellow-500">
-      <path d="M12 2l2.9 6.1 6.7.9-4.8 4.6 1.2 6.6L12 17.8 6 20.2l1.2-6.6L2.4 9l6.7-.9L12 2z" />
-    </svg>
-  )
-  const HalfStar = () => (
-    <svg viewBox="0 0 24 24" className="w-4 h-4">
-      <defs>
-        <linearGradient id="half">
-          <stop offset="50%" stopColor="#facc15" />
-          <stop offset="50%" stopColor="#e5e7eb" />
-        </linearGradient>
-      </defs>
-      <path fill="url(#half)" d="M12 2l2.9 6.1 6.7.9-4.8 4.6 1.2 6.6L12 17.8 6 20.2l1.2-6.6L2.4 9l6.7-.9L12 2z" />
-    </svg>
-  )
-  const EmptyStar = () => (
-    <svg viewBox="0 0 24 24" className="w-4 h-4 fill-gray-300">
-      <path d="M12 2l2.9 6.1 6.7.9-4.8 4.6 1.2 6.6L12 17.8 6 20.2l1.2-6.6L2.4 9l6.7-.9L12 2z" />
-    </svg>
-  )
+  // Reset initialization when data changes
+  useEffect(() => {
+    isInitialized.current = false;
+  }, [data])
+
+  useAnimationFrame((time, delta) => {
+    if (!containerRef.current) return;
+    
+    // We render 3 sets of data. So scrollWidth = 3 * W.
+    const W = containerRef.current.scrollWidth / 3;
+    if (W === 0) return;
+
+    // Initialize x to -W on the very first frame we have width!
+    if (!isInitialized.current) {
+      x.set(-W);
+      isInitialized.current = true;
+      return;
+    }
+
+    let moveBy = 0;
+    if (!isDragging) {
+      // Auto-scroll
+      moveBy = baseVelocity * (delta / 16);
+    }
+
+    let currentX = x.get();
+    let newX = currentX + moveBy;
+
+    // Wrap logic ONLY when not dragging
+    if (!isDragging) {
+      if (newX <= -2 * W) {
+        newX += W;
+      } else if (newX >= 0) {
+        newX -= W;
+      }
+    }
+
+    if (newX !== currentX) {
+      x.set(newX);
+    }
+  });
 
   const renderStars = (rating: number) => {
     const full = Math.floor(rating)
@@ -92,15 +142,18 @@ export default function Testimonials() {
       .then((r) => r.json())
       .then((res) => {
         const list = res.data || res
-        const activeList = list.filter(
-          (t: Testimonial) => t.status === "Active"
-        )
+        const activeList = list
+          .filter((t: Testimonial) => t.status === "Active")
+          .slice(0, 5)
+          .map((t: Testimonial) => ({
+            ...t,
+            parsedReview: limitHtmlWords(t.review, 50),
+            isLong: htmlToText(t.review).split(/\s+/).length > 50,
+          }))
         setData(activeList)
       })
       .catch(() => { })
   }, [refresh])
-
-  const loopData = [...data, ...data, ...data, ...data, ...data, ...data]
 
   return (
     <Section className="py-16 md:py-24">
@@ -112,32 +165,27 @@ export default function Testimonials() {
         </Button>
       </div>
 
-      {/* SLIDER — unchanged */}
-      <div className="overflow-hidden">
+      {/* SLIDER */}
+      <div className="overflow-hidden cursor-grab active:cursor-grabbing">
         <motion.div
-          className="flex gap-6 w-max"
+          ref={containerRef}
+          className="flex gap-6 w-max pr-6"
+          style={{ x }}
           drag="x"
-          dragConstraints={{
-            left: -(data.length * 300),
-            right: 0,
-          }}
-          whileTap={{ cursor: "grabbing" }}
-          animate={{ x: ["0%", "-33.33%"] }}
-          transition={{ duration: 300, ease: "linear", repeat: Infinity }}
-          style={{ willChange: "transform" }}
-
+          dragElastic={0}
+          onDragStart={() => setIsDragging(true)}
+          onDragEnd={() => setIsDragging(false)}
         >
-          {loopData.map((t, i) => {
+          {data.length > 0 && [...data, ...data, ...data].map((t, i) => {
             const bg =
               i % 2 === 0
-                ? "color-mix(in srgb, var(--color-accent) 12%, white)"
-                : "color-mix(in srgb, var(--color-primary) 12%, white)"
+                ? "#fdeceb" // var(--color-accent) 12% mixed with white
+                : "#e5e8f0" // var(--color-primary) 12% mixed with white
 
             return (
-              <motion.div
+              <div
                 key={`${t.id}-${i}`}
-                {...fadeUp}
-                className="p-5 sm:p-6 p-5 sm:p-6 flex-shrink-0 w-[280px] sm:w-[300px] md:w-[320px]"
+                className="p-5 sm:p-6 flex-shrink-0 w-[280px] sm:w-[300px] md:w-[320px]"
                 style={{
                   background: bg,
                   borderRadius: "var(--radius-lg)",
@@ -146,7 +194,7 @@ export default function Testimonials() {
               >
                 <div className="flex items-center gap-3 mb-4">
                   <img
-                    src={mediaUrl(t.image)}   // ✅ base url
+                    src={mediaUrl(t.image)}
                     alt={t.name}
                     className="w-10 h-10 rounded-full object-cover shrink-0"
                   />
@@ -159,11 +207,11 @@ export default function Testimonials() {
                 <p
                   className="text-xs sm:text-sm leading-relaxed opacity-90 break-words"
                   dangerouslySetInnerHTML={{
-                    __html: limitHtmlWords(t.review, 50),
+                    __html: t.parsedReview || "",
                   }}
                 />
 
-                {htmlToText(t.review).split(/\s+/).length > 50 && (
+                {t.isLong && (
                   <button
                     onClick={() => setActive(t)}
                     className="mt-3 text-xs sm:text-sm font-medium text-[var(--color-accent)] hover:underline"
@@ -171,7 +219,7 @@ export default function Testimonials() {
                     Read More
                   </button>
                 )}
-              </motion.div>
+              </div>
             )
           })}
         </motion.div>
