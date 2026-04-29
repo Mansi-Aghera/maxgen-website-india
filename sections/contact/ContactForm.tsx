@@ -9,6 +9,7 @@ import { fadeUp, stagger } from "@/lib/motion";
 import { Facebook, Instagram, Linkedin } from "lucide-react";
 import { API } from "@/lib/api"; // ✅ BASE URL SYSTEM
 import Swal from "sweetalert2";
+import CustomPhoneInput from "@/components/ui/PhoneInput";
 
 function Social({
   icon,
@@ -293,15 +294,14 @@ export default function ContactForm() {
             )}
           </div>
 
-          <div>
-            <Input
+          <div >
+            <CustomPhoneInput
               placeholder="Mobile Number"
               value={form.phone}
-              onChange={(v) => handleChange("phone", v)}
+              onChange={(v) => handleChange("phone", v || "")}
+              error={errors.phone}
+              className="w-full px-4 py-3 text-sm border rounded-xl bg-white"
             />
-            {errors.phone && (
-              <p className="text-red-500 text-xs mt-1">{errors.phone}</p>
-            )}
           </div>
 
           <Input

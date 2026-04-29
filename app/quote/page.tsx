@@ -8,6 +8,7 @@ import { API } from "@/lib/api"
 import Swal from "sweetalert2"
 import { useRouter } from "next/navigation"
 import { ChevronDown } from "lucide-react"
+import CustomPhoneInput from "@/components/ui/PhoneInput"
 
 export default function QuotePage() {
     const router = useRouter()
@@ -142,6 +143,7 @@ window.opener ? window.close() : router.push("/")
     <div className="min-h-screen bg-light flex items-center justify-center px-4">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
+        
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
         className="w-full max-w-[1100px] bg-white rounded-2xl shadow-lg overflow-hidden"
@@ -184,16 +186,14 @@ window.opener ? window.close() : router.push("/")
               </div>
 
               {/* Phone */}
-              <div>
-                <input
+              <div className="w-full border-0 border-b border-default bg-transparent py-2.5 text-[14px] outline-none focus:border-accent">
+                <CustomPhoneInput
+          
                   placeholder="Contact number"
                   value={form.phone}
-                  onChange={(e) => handleChange("phone", e.target.value)}
-                  className="w-full border-0 border-b border-default bg-transparent py-2.5 text-[14px] outline-none focus:border-accent"
+                  onChange={(v) => handleChange("phone", v || "")}
+                  error={errors.phone}
                 />
-                {errors.phone && (
-                  <p className="text-xs text-red-500 mt-1">{errors.phone}</p>
-                )}
               </div>
 
               {/* Email */}
@@ -209,12 +209,7 @@ window.opener ? window.close() : router.push("/")
                 )}
               </div>
 
-              <input
-                placeholder="Whatsapp (optional)"
-                value={form.whatsapp}
-                onChange={(e) => handleChange("whatsapp", e.target.value)}
-                className="w-full border-0 border-b border-default bg-transparent py-2.5 text-[14px] outline-none focus:border-accent"
-              />
+              
 
               <input
                 placeholder="Skype (optional)"

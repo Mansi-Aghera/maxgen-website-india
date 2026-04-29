@@ -7,6 +7,7 @@ import { X } from "lucide-react";
 import Button from "@/components/ui/Button";
 import Swal from "sweetalert2";
 import { API } from "@/lib/api";
+import CustomPhoneInput from "@/components/ui/PhoneInput";
 
 interface Technology {
   id: number;
@@ -218,14 +219,13 @@ await Swal.fire({
         </div>
 
         <div>
-          <input
-            type="tel"
+          <CustomPhoneInput
             placeholder="Contact Number"
             value={form.contact}
-            onChange={(e) => handleChange("contact", e.target.value)}
+            onChange={(v) => handleChange("contact", v || "")}
             className="w-full border rounded-md px-3 py-2"
+            error={errors.contact?.[0]}
           />
-          {fieldError("contact")}
         </div>
 
         <div>

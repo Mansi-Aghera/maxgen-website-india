@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import Button from "@/components/ui/Button"
 import { API } from "@/lib/api"
 import Swal from "sweetalert2"
+import CustomPhoneInput from "@/components/ui/PhoneInput"
 
 export default function ServiceQuoteForm({
   service = "Web Devlopment",
@@ -207,20 +208,12 @@ export default function ServiceQuoteForm({
         </div>
 
         <div>
-          <div className="flex border border-gray-200 rounded-md overflow-hidden h-[44px]">
-            <span className="flex items-center px-3 text-sm sm:text-base text-black bg-gray-50 border-r border-gray-200">
-              +91
-            </span>
-            <input
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder="Contact Number *"
-              className="flex-1 px-3 text-sm sm:text-base placeholder:text-gray-400 focus:outline-none"
-            />
-          </div>
-          {errors.phone && (
-            <p className="text-red-500 text-xs mt-1">{errors.phone}</p>
-          )}
+          <CustomPhoneInput
+            value={phone}
+            onChange={(v) => setPhone(v || "")}
+            placeholder="Contact Number *"
+            error={errors.phone}
+          />
         </div>
 
         <div>

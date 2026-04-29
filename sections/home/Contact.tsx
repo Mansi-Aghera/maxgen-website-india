@@ -9,6 +9,7 @@ import Button from "@/components/ui/Button"
 import { fadeUp, stagger } from "@/lib/motion"
 import { API } from "@/lib/api"
 import Swal from "sweetalert2"
+import CustomPhoneInput from "@/components/ui/PhoneInput"
 
 export default function Contact() {
   const [form, setForm] = useState({
@@ -192,7 +193,7 @@ await Swal.fire({
               )}
             </div>
 
-            <div>
+            {/* <div>
               <Input
                 name="phone"
                 value={form.phone}
@@ -204,6 +205,15 @@ await Swal.fire({
                   {errors.phone}
                 </p>
               )}
+            </div> */}
+            <div>
+              <CustomPhoneInput
+                value={form.phone}
+                onChange={(value) => setForm({ ...form, phone: value || "" })}
+                placeholder="Phone Number"
+                error={errors.phone}
+                className="w-full px-4 py-3 text-sm border rounded-xl bg-white"
+              />
             </div>
 
             <div>
