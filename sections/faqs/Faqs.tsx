@@ -26,6 +26,7 @@ type FAQ = {
 export default function Faqs() {
   const [faqs, setFaqs] = useState<FAQ[]>([])
   const [activeCategory, setActiveCategory] = useState<string>("")
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   /* FETCH */
   useEffect(() => {
@@ -147,23 +148,55 @@ export default function Faqs() {
         </motion.div>
 
         {/* MOBILE CATEGORY */}
-        <div className="lg:hidden mb-6">
-          <div className="relative">
-  <select
-    value={activeCategory}
-    onChange={(e) => setActiveCategory(e.target.value)}
-    className="w-full border px-4 py-3 rounded-md text-sm appearance-none pr-10"
-  >
-    {categories.map((cat) => (
-      <option key={cat}>{cat}</option>
-    ))}
-  </select>
+        <div className="lg:hidden mb-8">
+          <div className="relative z-20">
+            <button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="w-full flex items-center justify-between px-5 py-4 bg-white border-2 border-gray-200 rounded-xl text-left shadow-sm hover:border-primary/30 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/20"
+            >
+              <span className="font-medium text-gray-800 text-base md:text-lg">
+                {activeCategory || "Select Category"}
+              </span>
+              <div
+                className={`w-8 h-8 flex items-center justify-center rounded-full bg-primary/5 text-primary transition-transform duration-300 ${
+                  isDropdownOpen ? "rotate-180" : ""
+                }`}
+              >
+                <ChevronDown size={18} />
+              </div>
+            </button>
 
-  <ChevronDown
-    size={18}
-    className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500"
-  />
-</div>
+            <AnimatePresence>
+              {isDropdownOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}
+                  className="absolute left-0 right-0 top-full mt-3 bg-white border border-gray-100 rounded-xl shadow-xl overflow-hidden max-h-[300px] overflow-y-auto"
+                >
+                  <div className="p-2 space-y-1">
+                    {categories.map((cat) => (
+                      <button
+                        key={cat}
+                        onClick={() => {
+                          setActiveCategory(cat)
+                          setIsDropdownOpen(false)
+                        }}
+                        className={`w-full text-left px-4 py-3 rounded-lg text-sm md:text-base font-medium transition-all duration-200 ${
+                          activeCategory === cat
+                            ? "bg-primary text-white shadow-md transform scale-[1.02]"
+                            : "text-gray-600 hover:bg-gray-50 hover:text-primary"
+                        }`}
+                      >
+                        {cat}
+                      </button>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
 
         {/* RIGHT FAQ */}
