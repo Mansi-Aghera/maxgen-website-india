@@ -123,7 +123,7 @@ await Swal.fire({
     <Section className="py-16 md:py-24">
       <motion.div
         {...stagger}
-        className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center"
+        className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center"
       >
         {/* IMAGE */}
         <motion.div
