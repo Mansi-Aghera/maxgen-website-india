@@ -17,7 +17,7 @@ interface CustomPhoneInputProps {
  * A premium international phone number input with a country flag dropdown.
  * Uses react-phone-number-input under the hood with custom styling.
  */
-const CustomPhoneInput = forwardRef<HTMLInputElement, CustomPhoneInputProps>(
+const CustomPhoneInput = forwardRef<any, CustomPhoneInputProps>(
   ({ value, onChange, placeholder = "Phone Number", error, className, variant = "outline" }, ref) => {
     const isUnderline = variant === "underline"
 

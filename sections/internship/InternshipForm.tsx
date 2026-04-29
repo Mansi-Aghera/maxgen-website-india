@@ -5,6 +5,7 @@ import { X } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { API } from "@/lib/api"; // ✅ added
 import CustomPhoneInput from "@/components/ui/PhoneInput";
+import Swal from "sweetalert2";
 
 interface Props {
   onClose: () => void;
