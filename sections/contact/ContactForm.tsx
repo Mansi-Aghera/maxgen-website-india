@@ -300,7 +300,7 @@ export default function ContactForm() {
               value={form.phone}
               onChange={(v) => handleChange("phone", v || "")}
               error={errors.phone}
-              className="w-full px-4 py-3 text-sm border rounded-xl bg-white"
+              className="w-full px-4 py-3 text-sm border bg-white"
             />
           </div>
 

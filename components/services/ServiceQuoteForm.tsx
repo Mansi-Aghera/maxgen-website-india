@@ -213,6 +213,7 @@ export default function ServiceQuoteForm({
             onChange={(v) => setPhone(v || "")}
             placeholder="Contact Number *"
             error={errors.phone}
+            className="w-full h-[44px] border border-gray-200 rounded-md px-3 flex items-center"
           />
         </div>
 
