@@ -2,7 +2,8 @@
 "use client"
 
 import { useState } from "react"
-import { X } from "lucide-react"
+import { X, ChevronDown } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
 import Button from "@/components/ui/Button"
 import { API } from "@/lib/api"
 import Swal from "sweetalert2"
@@ -20,6 +21,15 @@ export default function ServiceQuoteForm({
   const [phone, setPhone] = useState("")
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+
+  const servicesList = [
+    { value: "Web Devlopment", label: "Web Development" },
+    { value: "Mobile App Devlopment", label: "Mobile App Development" },
+    { value: "Software&Enterprise", label: "Software & Enterprise" },
+    { value: "Design", label: "Design" },
+    { value: "Maintenance", label: "Maintenance" },
+  ]
 
   const [errors, setErrors] = useState({
     name: "",
@@ -148,22 +158,52 @@ export default function ServiceQuoteForm({
           )}
         </div>
 
-        <div className="relative">
-          <select
-            value={selectedService}
-            onChange={(e) => setSelectedService(e.target.value)}
-            className="w-full h-[44px] border border-gray-200 rounded-md px-3 text-sm sm:text-base bg-white appearance-none focus:outline-none focus:ring-2 focus:ring-primary/30"
+        <div className="relative z-20">
+          <button
+            type="button"
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            className="w-full h-[44px] flex items-center justify-between px-3 bg-white border border-gray-200 rounded-md text-left text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary/30"
           >
-            <option value="Web Devlopment">Web Design & Development</option>
-            <option value="Mobile App Devlopment">Mobile App Development</option>
-            <option value="Design">Logo Design & Graphic Design</option>
-            <option value="Maintenance">Support & Maintenance</option>
-            <option value="E-commerce Development">E-commerce Development</option>
-            <option value="SEO & Digital Marketing">SEO & Digital Marketing</option>
-          </select>
-          <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">
-            ▾
-          </span>
+            <span className={selectedService ? "text-black" : "text-gray-400"}>
+              {servicesList.find(s => s.value === selectedService)?.label || "Select Service"}
+            </span>
+            <ChevronDown
+              size={16}
+              className={`text-gray-400 transition-transform duration-300 ${isDropdownOpen ? "rotate-180" : ""}`}
+            />
+          </button>
+
+          <AnimatePresence>
+            {isDropdownOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+                className="w-full mt-1 bg-white border border-gray-100 rounded-lg shadow-sm overflow-hidden"
+              >
+                <div className="max-h-52 overflow-y-auto p-1.5 space-y-0.5">
+                  {servicesList.map((srv) => (
+                    <button
+                      type="button"
+                      key={srv.value}
+                      onClick={() => {
+                        setSelectedService(srv.value)
+                        setIsDropdownOpen(false)
+                      }}
+                      className={`w-full text-left px-3 py-2.5 rounded-md text-sm transition-all duration-200 ${
+                        selectedService === srv.value
+                          ? "bg-primary text-white font-medium"
+                          : "text-gray-700 hover:bg-gray-50 hover:text-primary"
+                      }`}
+                    >
+                      {srv.label}
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         <div>

@@ -3,10 +3,11 @@
 "use client"
 
 import { useState } from "react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { API } from "@/lib/api"
 import Swal from "sweetalert2"
 import { useRouter } from "next/navigation"
+import { ChevronDown } from "lucide-react"
 
 export default function QuotePage() {
     const router = useRouter()
@@ -28,6 +29,15 @@ export default function QuotePage() {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState("")
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+
+  const servicesList = [
+    { value: "Web Devlopment", label: "Web Development" },
+    { value: "Mobile App Devlopment", label: "Mobile App Development" },
+    { value: "Software&Enterprise", label: "Software & Enterprise" },
+    { value: "Design", label: "Design" },
+    { value: "Maintenance", label: "Maintenance" },
+  ]
 
   const [errors, setErrors] = useState({
     full_name: "",
@@ -214,19 +224,54 @@ window.opener ? window.close() : router.push("/")
               />
 
               {/* Service */}
-              <div>
-                <select
-                  value={form.services_type}
-                  onChange={(e) => handleChange("services_type", e.target.value)}
-                  className="w-full border-0 border-b border-default bg-transparent py-2.5 text-[14px] outline-none focus:border-accent"
+              <div className="relative z-20">
+                <button
+                  type="button"
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className="w-full flex items-center justify-between border-0 border-b border-default bg-transparent py-2.5 text-[14px] outline-none focus:border-accent text-left"
                 >
-                  <option value="">Quote for</option>
-                  <option value="Web Devlopment">Web Development</option>
-                  <option value="Mobile App Devlopment">Mobile App Development</option>
-                  <option value="Software&Enterprise">Software & Enterprise</option>
-                  <option value="Design">Design</option>
-                  <option value="Maintenance">Maintenance</option>
-                </select>
+                  <span className={form.services_type ? "text-gray-900" : "text-gray-500"}>
+                    {servicesList.find((s) => s.value === form.services_type)?.label || "Quote for"}
+                  </span>
+                  <ChevronDown
+                    size={16}
+                    className={`text-gray-400 transition-transform duration-300 ${
+                      isDropdownOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                <AnimatePresence>
+                  {isDropdownOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.2, ease: "easeOut" }}
+                      className="w-full mt-1 bg-white border border-gray-100 rounded-lg shadow-md overflow-hidden"
+                    >
+                      <div className="max-h-52 overflow-y-auto p-1.5 space-y-0.5">
+                        {servicesList.map((srv) => (
+                          <button
+                            type="button"
+                            key={srv.value}
+                            onClick={() => {
+                              handleChange("services_type", srv.value)
+                              setIsDropdownOpen(false)
+                            }}
+                            className={`w-full text-left px-3 py-2.5 rounded-md text-sm transition-all duration-200 ${
+                              form.services_type === srv.value
+                                ? "bg-primary text-white font-medium"
+                                : "text-gray-700 hover:bg-gray-50 hover:text-primary"
+                            }`}
+                          >
+                            {srv.label}
+                          </button>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
                 {errors.services_type && (
                   <p className="text-xs text-red-500 mt-1">
                     {errors.services_type}
