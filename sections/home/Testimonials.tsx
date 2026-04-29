@@ -75,55 +75,6 @@ export default function Testimonials() {
   const [openForm, setOpenForm] = useState(false)
   const [refresh, setRefresh] = useState(0)
 
-  // Smooth infinite scroll state
-  const containerRef = useRef<HTMLDivElement>(null)
-  const x = useMotionValue(0)
-  const [isDragging, setIsDragging] = useState(false)
-  const isInitialized = useRef(false)
-  const baseVelocity = -1 // adjust speed. -1px per 16ms -> ~60px/sec
-
-  // Reset initialization when data changes
-  useEffect(() => {
-    isInitialized.current = false;
-  }, [data])
-
-  useAnimationFrame((time, delta) => {
-    if (!containerRef.current) return;
-    
-    // We render 3 sets of data. So scrollWidth = 3 * W.
-    const W = containerRef.current.scrollWidth / 3;
-    if (W === 0) return;
-
-    // Initialize x to -W on the very first frame we have width!
-    if (!isInitialized.current) {
-      x.set(-W);
-      isInitialized.current = true;
-      return;
-    }
-
-    let moveBy = 0;
-    if (!isDragging) {
-      // Auto-scroll
-      moveBy = baseVelocity * (delta / 16);
-    }
-
-    let currentX = x.get();
-    let newX = currentX + moveBy;
-
-    // Wrap logic ONLY when not dragging
-    if (!isDragging) {
-      if (newX <= -2 * W) {
-        newX += W;
-      } else if (newX >= 0) {
-        newX -= W;
-      }
-    }
-
-    if (newX !== currentX) {
-      x.set(newX);
-    }
-  });
-
   const renderStars = (rating: number) => {
     const full = Math.floor(rating)
     const half = rating % 1 >= 0.5
@@ -166,17 +117,22 @@ export default function Testimonials() {
       </div>
 
       {/* SLIDER */}
-      <div className="overflow-hidden cursor-grab active:cursor-grabbing">
+      <div className="mt-12 overflow-hidden cursor-grab active:cursor-grabbing">
         <motion.div
-          ref={containerRef}
-          className="flex gap-6 w-max pr-6"
-          style={{ x }}
+          className="flex gap-6 w-max"
           drag="x"
-          dragElastic={0}
-          onDragStart={() => setIsDragging(true)}
-          onDragEnd={() => setIsDragging(false)}
+          dragConstraints={{ left: -1500, right: 0 }}
+          whileTap={{ cursor: "grabbing" }}
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{
+            duration: 35,
+            ease: "linear",
+            repeat: Infinity,
+            repeatType: "loop",
+          }}
+          style={{ willChange: "transform" }}
         >
-          {data.length > 0 && [...data, ...data, ...data].map((t, i) => {
+          {data.length > 0 && [...data, ...data].map((t, i) => {
             const bg =
               i % 2 === 0
                 ? "#fdeceb" // var(--color-accent) 12% mixed with white
